@@ -49,7 +49,7 @@ function PostEditPage({
           border-r-[1px] border-r-slate-600`}
         >
           {loading ? (
-            <FadeLoader size={150} color="#8f8f8f" speedMultiplier={2} />
+            <FadeLoader color="#8f8f8f" speedMultiplier={2} />
           ) : (
             <img
               src={croppedImg}

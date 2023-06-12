@@ -2,6 +2,7 @@ import Comment from "./Comment";
 import { useState, useRef, useEffect } from "react";
 import { GrAddCircle } from "react-icons/gr";
 import defaultPic from "../assets/avatar-1.jpg";
+import { FadeLoader } from "react-spinners";
 
 function CommentList({ postId, user }) {
   const [commentArr, setCommentArr] = useState([]);
@@ -58,13 +59,20 @@ function CommentList({ postId, user }) {
       ))}
 
       <div className="self-center my-2">
-        <button
-          className="active:scale-95"
-          disabled={isLoading}
-          onClick={fetchComments}
-        >
-          <GrAddCircle size={35} className="text-white" />
-        </button>
+        {isLoading ? (
+          <FadeLoader
+            color="#8f8f8f"
+            height={7}
+            margin={-9}
+            radius={8}
+            width={3}
+            speedMultiplier={2}
+          />
+        ) : (
+          <button className="active:scale-95" onClick={fetchComments}>
+            <GrAddCircle size={35} className="text-white" />
+          </button>
+        )}
       </div>
     </>
   );
