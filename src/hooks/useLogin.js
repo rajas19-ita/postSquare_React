@@ -9,9 +9,6 @@ const useLogin = () => {
   const login = async (userInfo) => {
     setIsLoading(true);
     setError(null);
-    console.log(process.env.VITE_API_URL);
-    console.log(import.meta.env.VITE_API_URL);
-    console.log(import.meta.env);
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/users/login`,
       {
@@ -22,9 +19,9 @@ const useLogin = () => {
         body: JSON.stringify(userInfo),
       }
     );
-    console.log(response);
+
     const json = await response.json();
-    console.log(json);
+
     if (!response.ok) {
       setError(json.err);
     } else {

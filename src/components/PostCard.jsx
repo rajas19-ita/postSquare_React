@@ -29,7 +29,7 @@ function PostCard({
   const handleLike = async (e) => {
     if (!liked) {
       const response = await fetch(
-        `${process.env.VITE_API_URL}/posts/${_id}/likes`,
+        `${import.meta.env.VITE_API_URL}/posts/${_id}/likes`,
         {
           method: "POST",
           headers: {
@@ -46,7 +46,7 @@ function PostCard({
       }
     } else {
       const response = await fetch(
-        `${process.env.VITE_API_URL}/posts/${_id}/likes`,
+        `${import.meta.env.VITE_API_URL}/posts/${_id}/likes`,
         {
           method: "DELETE",
           headers: {
