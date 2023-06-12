@@ -9,6 +9,7 @@ const useLogin = () => {
   const login = async (userInfo) => {
     setIsLoading(true);
     setError(null);
+    console.log(process.env.VITE_API_URL);
     const response = await fetch(`${process.env.VITE_API_URL}/users/login`, {
       method: "POST",
       headers: {
@@ -16,9 +17,9 @@ const useLogin = () => {
       },
       body: JSON.stringify(userInfo),
     });
-
+    console.log(response);
     const json = await response.json();
-
+    console.log(json);
     if (!response.ok) {
       setError(json.err);
     } else {
