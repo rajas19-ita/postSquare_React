@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import defaultPic from "../assets/avatar-1.jpg";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useState } from "react";
-import FadeLoader from "react-spinners/FadeLoader";
+import { FadeLoader } from "react-spinners";
 import SetAvatarModal from "../components/SetAvatarModal";
 import AuthContext from "../context/AuthContext";
 import { toast } from "react-toastify";
