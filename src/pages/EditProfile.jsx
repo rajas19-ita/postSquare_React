@@ -43,7 +43,6 @@ function EditProfile() {
         <div className="w-32 h-32 rounded-full md:mr-20 relative border-[1px] border-slate-600">
           {isProcessing ? (
             <FadeLoader
-              size={3}
               color="#8f8f8f"
               speedMultiplier={2}
               className="ml-10 mt-8"

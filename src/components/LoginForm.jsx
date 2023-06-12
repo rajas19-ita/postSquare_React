@@ -55,15 +55,23 @@ function LoginForm() {
             </div>
 
             <button
-              className="rounded-md bg-[#273544] self-stretch py-3 uppercase font-medium 
+              className="rounded-md bg-[#273544] h-11 self-stretch py-3 uppercase font-medium 
               text-sm active:scale-95"
               type="submit"
               disabled={isLoading}
             >
               {isLoading ? (
-                <FadeLoader color="#8f8f8f" speedMultiplier={2} />
+                <FadeLoader
+                  color="#8f8f8f"
+                  height={7}
+                  margin={-9}
+                  radius={8}
+                  width={3}
+                  speedMultiplier={2}
+                  cssOverride={{ margin: "auto", top: "1rem", left: "1rem" }}
+                />
               ) : (
-                <span>Login</span>
+                "Login"
               )}
             </button>
           </form>
