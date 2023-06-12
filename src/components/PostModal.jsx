@@ -38,7 +38,7 @@ function PostModal({
         avatar: user.avatarUrl ? user.avatarUrl : defaultPic,
         createdAt: new Date(),
       };
-
+      setComment("");
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/posts/${postId}/comments`,
         {
@@ -52,7 +52,6 @@ function PostModal({
       );
 
       if (response.ok) {
-        setComment("");
         setCommentArr((commentArr) => [latest, ...commentArr]);
       }
     }
