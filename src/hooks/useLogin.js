@@ -10,6 +10,8 @@ const useLogin = () => {
     setIsLoading(true);
     setError(null);
     console.log(process.env.VITE_API_URL);
+    console.log(import.meta.env.VITE_API_URL);
+    console.log(import.meta.env);
     const response = await fetch(`${process.env.VITE_API_URL}/users/login`, {
       method: "POST",
       headers: {
