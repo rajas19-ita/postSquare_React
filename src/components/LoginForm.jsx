@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
+import { FadeLoader } from "react-spinners";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -59,7 +60,11 @@ function LoginForm() {
               type="submit"
               disabled={isLoading}
             >
-              Login
+              {isLoading ? (
+                <FadeLoader color="#8f8f8f" speedMultiplier={2} />
+              ) : (
+                <span>Login</span>
+              )}
             </button>
           </form>
           {error ? (
