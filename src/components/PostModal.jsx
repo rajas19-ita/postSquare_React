@@ -40,7 +40,7 @@ function PostModal({
       };
 
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/posts/${postId}/comments`,
+        `${import.meta.env.VITE_API_URL}/posts/${postId}/comments`,
         {
           method: "POST",
           headers: {

@@ -20,7 +20,9 @@ function CommentList({ postId, user }) {
     if (!isEnd) {
       setIsLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/posts/${postId}/comments?timeStamp=${timeStamp}`,
+        `${
+          import.meta.env.VITE_API_URL
+        }/posts/${postId}/comments?timeStamp=${timeStamp}`,
         {
           method: "GET",
           headers: {

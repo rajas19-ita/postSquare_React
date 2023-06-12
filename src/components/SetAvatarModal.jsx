@@ -27,7 +27,7 @@ function SetAvatarModal({
     data.append("avatar", file);
 
     const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/users/me/avatar`,
+      `${import.meta.env.VITE_API_URL}/users/me/avatar`,
       {
         method: "PATCH",
         headers: {

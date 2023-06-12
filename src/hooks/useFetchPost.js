@@ -12,7 +12,7 @@ const useFetchPost = () => {
     if (!postEnd) {
       setIsLoading(true);
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/posts?timeStamp=${lastTimeStamp}`,
+        `${import.meta.env.VITE_API_URL}/posts?timeStamp=${lastTimeStamp}`,
         {
           method: "GET",
           headers: {
