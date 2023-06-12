@@ -12,13 +12,16 @@ const useLogin = () => {
     console.log(process.env.VITE_API_URL);
     console.log(import.meta.env.VITE_API_URL);
     console.log(import.meta.env);
-    const response = await fetch(`${process.env.VITE_API_URL}/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userInfo),
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      }
+    );
     console.log(response);
     const json = await response.json();
     console.log(json);
