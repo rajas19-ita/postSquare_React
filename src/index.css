@@ -3,11 +3,15 @@
 @tailwind utilities;
 
 .container {
-    overflow: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
 .container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+  display: none; /* Chrome, Safari, Opera */
+}
+
+body {
+  font-family: "Inter", sans-serif;
 }

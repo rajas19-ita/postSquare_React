@@ -95,7 +95,7 @@ function SetAvatarModal({
       mt-4 px-4 py-3 w-72 xl:w-1/4 aspect-[4/5] bg-[#34495e] text-[#e6e6e6] z-50 rounded-md"
       >
         <button
-          className="self-end rounded-md bg-[#273544] p-2"
+          className="self-end rounded-md bg-gunmetal p-2"
           onClick={onClose}
         >
           <FaTimes className="" />
@@ -115,7 +115,7 @@ function SetAvatarModal({
           />
         </div>
         <button
-          className="active:scale-95 px-3 py-1.5 text-sm self-center font-medium bg-[#273544] rounded-md "
+          className="active:scale-95 px-3 py-1.5 text-sm self-center font-medium bg-gunmetal rounded-md "
           onClick={onCrop}
         >
           Set Avatar

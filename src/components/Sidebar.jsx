@@ -18,7 +18,7 @@ function Sidebar() {
   const { user } = useContext(AuthContext);
 
   return (
-    <div className="fixed bottom-0 w-full h-16 bg-[#273544] text-[#e6e6e6] md:flex md:flex-col md:justify-between p-4 md:h-full md:w-20">
+    <div className="fixed bottom-0 w-full h-16 bg-gunmetal text-[#e6e6e6] md:flex md:flex-col md:justify-between p-4 md:h-full md:w-20 z-10">
       <div className="hidden md:block mt-2">
         <img src={logo} alt="postSquare" />
       </div>

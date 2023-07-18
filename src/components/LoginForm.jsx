@@ -55,7 +55,7 @@ function LoginForm() {
             </div>
 
             <button
-              className="rounded-md bg-[#273544] h-11 self-stretch py-3 uppercase font-medium 
+              className="rounded-md bg-gunmetal h-11 self-stretch py-3 uppercase font-medium 
               text-sm active:scale-95"
               type="submit"
               disabled={isLoading}

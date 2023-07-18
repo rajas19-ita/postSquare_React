@@ -37,7 +37,7 @@ function SelectPage({ setPage, setImg }) {
         />
         <label
           htmlFor="img-input"
-          className="bg-[#273544] cursor-pointer active:scale-95 py-2 px-4 rounded-md text-sm  font-medium tracking-wide"
+          className="bg-gunmetal cursor-pointer active:scale-95 py-2 px-4 rounded-md text-sm  font-medium tracking-wide"
         >
           Select from Computer
         </label>

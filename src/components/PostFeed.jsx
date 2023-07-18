@@ -26,7 +26,7 @@ function PostFeed() {
 
   return (
     <div
-      className="flex flex-col h-full w-full items-center pt-9 gap-10 overflow-y-auto"
+      className="flex flex-col w-full items-center pt-3 overflow-y-auto h-screen"
       ref={feedRef}
       onScroll={handleScrollEnd}
     >
