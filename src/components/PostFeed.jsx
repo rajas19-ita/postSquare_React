@@ -22,7 +22,8 @@ function PostFeed() {
                 feedRef.current.offsetHeight +
                     feedRef.current.scrollTop +
                     tolerence
-            ) >= feedRef.current.scrollHeight
+            ) >= feedRef.current.scrollHeight &&
+            !isLoading
         ) {
             fetchPosts();
         }
