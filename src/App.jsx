@@ -13,32 +13,32 @@ import PageNotFound from "./pages/PageNotFound";
 import Loading from "./pages/Loading";
 
 function App() {
-  const { user, isLoading } = useContext(AuthContext);
+    const { user, isLoading } = useContext(AuthContext);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-  return (
-    <>
-      <div className="w-full h-screen mx-auto bg-[#2e4053] lg:max-w-screen-lg ">
-        <Sidebar />
+    if (isLoading) {
+        return <Loading />;
+    }
+    return (
+        <>
+            <div className="w-full h-screen mx-auto bg-main lg:max-w-screen-lg text-[#e6e6e6] ">
+                <Sidebar />
 
-        <Routes>
-          <Route path="/" element={user ? <Home /> : <LoginForm />} />
-          <Route
-            path="/signup"
-            element={user ? <Navigate to="/" /> : <SignUpForm />}
-          />
-          <Route
-            path="/editProfile"
-            element={user ? <EditProfile /> : <AccessDeniedPage />}
-          />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </div>
-      <ToastContainer />
-    </>
-  );
+                <Routes>
+                    <Route path="/" element={user ? <Home /> : <LoginForm />} />
+                    <Route
+                        path="/signup"
+                        element={user ? <Navigate to="/" /> : <SignUpForm />}
+                    />
+                    <Route
+                        path="/editProfile"
+                        element={user ? <EditProfile /> : <AccessDeniedPage />}
+                    />
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </div>
+            <ToastContainer />
+        </>
+    );
 }
 
 export default App;

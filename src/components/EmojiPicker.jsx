@@ -1,45 +1,78 @@
-import { FaRegSmile } from 'react-icons/fa';
-import { useState } from 'react';
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+import { BsEmojiSmile } from "react-icons/bs";
+import { useState, useEffect, useRef } from "react";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 
-function EmojiPicker({ handleText, maxLength, position }) {
+function EmojiPicker({
+    handleText,
+    maxLength,
+    position,
+    cursor,
+    text,
+    cb,
+    color,
+}) {
     const [isOpen, setIsOpen] = useState(false);
+    const emoji = useRef();
+
+    useEffect(() => {
+        cursor.current += emoji.current;
+    }, [text]);
 
     const handleEmojiSelect = (Emoji) => {
+        emoji.current = Emoji.native.length;
         if (maxLength) {
             handleText((text) => {
-                if (text.length <= maxLength - Emoji.native.length)
-                    return text + Emoji.native;
-                else return text;
+                if (text.length <= maxLength - Emoji.native.length) {
+                    return (
+                        text.slice(0, cursor.current) +
+                        Emoji.native +
+                        text.slice(cursor.current)
+                    );
+                } else return text;
             });
         } else {
-            handleText((text) => text + Emoji.native);
+            handleText((text) => {
+                return (
+                    text.slice(0, cursor.current) +
+                    Emoji.native +
+                    text.slice(cursor.current)
+                );
+            });
+            if (cb) cb();
         }
     };
 
     return (
-        <div className='cursor-pointer relative'>
+        <div className="cursor-pointer relative h-5">
             <button
-                className='active:scale-95 my-4'
+                className="active:scale-90 transition-all ease-out active:text-[#b8b8b8] text-white"
                 onClick={() => {
                     setIsOpen(!isOpen);
                 }}
+                aria-label="Select Emoji"
+                aria-expanded={isOpen}
+                aria-controls="post-emoji-picker"
             >
-                <FaRegSmile size={20} />
+                <BsEmojiSmile className="h-5 w-5" color={color} />
             </button>
             {isOpen ? (
                 <div
                     className={`absolute ${
-                        position === 'top' ? 'bottom-full' : 'top-full'
+                        position === "top"
+                            ? "bottom-[125%]"
+                            : position === "bottom"
+                            ? "top-full"
+                            : "bottom-[125%] right-[5%]"
                     } `}
+                    id="post-emoji-picker"
                 >
                     <Picker
                         data={data}
                         onEmojiSelect={handleEmojiSelect}
-                        previewPosition='none'
-                        skinTonePosition='none'
-                        searchPosition='none'
+                        previewPosition="none"
+                        skinTonePosition="none"
+                        searchPosition="none"
                     />
                 </div>
             ) : null}

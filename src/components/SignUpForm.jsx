@@ -70,7 +70,7 @@ function SignUpForm() {
             </div>
 
             <button
-              className="rounded-md bg-gunmetal self-stretch py-3 uppercase font-medium 
+              className="rounded-md bg-sidebar self-stretch py-3 uppercase font-medium 
           text-sm active:scale-95"
               type="submit"
               disabled={isLoading}

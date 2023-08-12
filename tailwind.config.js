@@ -5,7 +5,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        gunmetal: "#273544",
+        main: "#2e4053",
+        sidebar: "#273544",
         platinum: "#e6e6e6",
       },
       gridTemplateColumns: {
