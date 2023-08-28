@@ -16,14 +16,17 @@ function EmojiPicker({
     const emoji = useRef();
 
     useEffect(() => {
-        cursor.current += emoji.current;
+        if (emoji.current) {
+            cursor.current += emoji.current;
+            emoji.current = 0;
+        }
     }, [text]);
 
     const handleEmojiSelect = (Emoji) => {
-        emoji.current = Emoji.native.length;
         if (maxLength) {
             handleText((text) => {
                 if (text.length <= maxLength - Emoji.native.length) {
+                    emoji.current = Emoji.native.length;
                     return (
                         text.slice(0, cursor.current) +
                         Emoji.native +
@@ -32,6 +35,7 @@ function EmojiPicker({
                 } else return text;
             });
         } else {
+            emoji.current = Emoji.native.length;
             handleText((text) => {
                 return (
                     text.slice(0, cursor.current) +

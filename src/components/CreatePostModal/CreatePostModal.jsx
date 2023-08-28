@@ -30,6 +30,7 @@ function CreatePostModal({ handleClose }) {
         }
         setPage("POST_STATUS");
         setIsPosting(true);
+
         const file = dataURLtoFile(croppedImg, "postImage");
         const data = new FormData();
         data.set("caption", caption);

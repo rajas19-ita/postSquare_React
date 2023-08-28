@@ -26,9 +26,17 @@ function PostCard({
     const [isPosting, setIsPosting] = useState(false);
     const [commentArrCard, setCommentArrCard] = useState([]);
     const [commentArrModal, setCommentArrModal] = useState([]);
+    const [postImageLoaded, setPostImageLoaded] = useState(false);
+    const [authorImageLoaded, setAuthorImageLoaded] = useState(false);
+
+    useEffect(() => {
+        if (postImageLoaded && authorImageLoaded) {
+            setIsLoading(false);
+        }
+    }, [postImageLoaded, authorImageLoaded]);
 
     const handleLoad = (e) => {
-        setIsLoading(false);
+        setPostImageLoaded(true);
         const { naturalWidth, naturalHeight } = e.target;
         const r = naturalWidth / naturalHeight;
 
@@ -71,9 +79,12 @@ function PostCard({
         }
     };
 
-    const handleInput = (e, cursor) => {
+    const handleInput = (e) => {
         setComment(e.target.value);
-        setTimeout(() => (cursor.current = e.target.selectionStart), 10);
+        setTimeout(() => {
+            cursor.current = e.target.selectionStart;
+        }, 10);
+
         //handle textbox height with increasing comment lines
         let textBox = e.target;
         textBox.style.height = "auto";
@@ -112,88 +123,100 @@ function PostCard({
     };
 
     return (
-        <div className="w-80 sm:w-[28rem] pt-2 bg-main border-b-[1px] border-b-slate-600 ">
-            <div className="relative overflow-y-hidden">
-                <div className="flex h-16 px-1 items-center ">
-                    <img
-                        src={author.avatarUrl ? author.avatarUrl : defaultPic}
-                        alt="avatar"
-                        className="rounded-full w-9 h-9 mr-3.5"
-                    />
-                    <h2 className="text-[0.875rem] font-medium tracking-wide mr-1 ">
-                        {author.username}
-                    </h2>
-                    <BsDot className="text-gray-500 text-sm mt-1 " />
-                    <h3 className=" text-gray-500 mt-0.5 text-[0.8125rem] tracking-wide">
-                        {getTimePassed(createdAt)}
-                    </h3>
-                </div>
-
+        <article className="w-80 sm:w-[28rem] bg-main border-b-[1px] border-b-slate-600 ">
+            <header className="flex h-16 px-1 items-center ">
                 {isLoading ? (
-                    <div className="w-full aspect-[16/9] animate-pulse bg-[#2A3A4B]"></div>
+                    <div className="w-9 h-9 mr-3.5 rounded-full animate-pulse bg-[#2A3A4B]"></div>
                 ) : null}
-                <div className="w-full">
-                    <img
-                        src={imageUrl}
-                        onLoad={handleLoad}
-                        className={`${
-                            isLoading ? "hidden" : "block"
-                        } object-contain rounded-sm w-full`}
-                    />
-                </div>
 
-                <div className="flex h-10  mt-1 items-center justify-between">
-                    <div className="flex gap-4">
-                        <button
-                            className="active:scale-95"
-                            onClick={handleLike}
-                        >
-                            {liked ? (
-                                <AiFillHeart size={27} />
-                            ) : (
-                                <AiOutlineHeart size={27} />
-                            )}
-                        </button>
-                        <button
-                            className="active:scale-95"
-                            onClick={() => setIsOpen(true)}
-                        >
-                            <TbMessageCircle2 size={27} />
-                        </button>
-                    </div>
-                    <span className="font-medium text-[0.875rem] tracking-wide">
-                        {totalLikes} likes
+                <img
+                    src={author.avatarUrl ? author.avatarUrl : defaultPic}
+                    alt={`avatar of ${author.username}`}
+                    className={`rounded-full w-9 h-9 mr-3.5 ${
+                        isLoading ? "hidden" : "block"
+                    }`}
+                    onLoad={() => {
+                        setAuthorImageLoaded(true);
+                    }}
+                />
+                <h2 className="text-[0.875rem] font-medium tracking-wide mr-1 ">
+                    {author.username}
+                </h2>
+                <BsDot className="text-gray-400 text-sm mt-1 " />
+                <span className=" text-gray-500 mt-0.5 text-[0.8125rem] tracking-wide">
+                    {getTimePassed(createdAt)}
+                </span>
+            </header>
+
+            {isLoading ? (
+                <div className="w-full aspect-[16/9] animate-pulse bg-[#2A3A4B]"></div>
+            ) : null}
+            <div className="w-full">
+                <img
+                    src={imageUrl}
+                    onLoad={handleLoad}
+                    className={`${
+                        isLoading ? "hidden" : "block"
+                    } object-contain rounded-sm w-full`}
+                />
+            </div>
+
+            <section className="flex h-10 mt-1 items-center justify-between">
+                <div className="flex gap-4">
+                    <button
+                        className="active:scale-90 transition-all ease-out active:text-[#b8b8b8] text-white"
+                        onClick={handleLike}
+                        aria-label="like the post"
+                    >
+                        {liked ? (
+                            <AiFillHeart size={27} />
+                        ) : (
+                            <AiOutlineHeart size={27} />
+                        )}
+                    </button>
+                    <button
+                        className="transition-all ease-out active:text-[#b8b8b8] text-white"
+                        onClick={() => setIsOpen(true)}
+                        aria-label="view comments"
+                    >
+                        <TbMessageCircle2 size={27} />
+                    </button>
+                </div>
+                <span className="font-medium text-[0.875rem] tracking-wide">
+                    {totalLikes} likes
+                </span>
+            </section>
+            <section className="mt-2 mb-3">
+                <p className="break-words font-normal text-[0.875rem] leading-[1.4rem]">
+                    <span className="font-medium tracking-wide">
+                        {author.username}{" "}
                     </span>
-                </div>
-                <div className="my-2">
-                    <p className="break-words font-normal text-[0.875rem] leading-[1.4rem]">
-                        <span className="font-medium tracking-wide">
-                            {author.username}{" "}
-                        </span>
-                        {caption}
-                    </p>
-                </div>
+                    {caption}
+                </p>
+            </section>
+
+            <section>
                 <button
-                    className="text-[0.875rem] font-normal text-gray-400 mb-2"
+                    className="text-[0.875rem] font-normal text-gray-400 transition-all ease-out 
+                active:text-gray-500 "
                     onClick={() => setIsOpen(true)}
                 >
                     View all Comments
                 </button>
-                <div className="">
-                    {commentArrCard.map((comment, index) => (
-                        <p
-                            className="break-words font-normal text-[0.875rem] leading-[1.4rem]"
-                            key={index}
-                        >
-                            <span className="font-medium tracking-wide">
-                                {comment.author}{" "}
-                            </span>
-                            {comment.comment}
-                        </p>
-                    ))}
-                </div>
-            </div>
-            <div className={`flex items-center pt-3 pb-4 `}>
+                {commentArrCard.map((comment, index) => (
+                    <p
+                        className="break-words font-normal text-[0.875rem] leading-[1.4rem]"
+                        key={index}
+                    >
+                        <span className="font-medium tracking-wide">
+                            {comment.author}{" "}
+                        </span>
+                        {comment.comment}
+                    </p>
+                ))}
+            </section>
+
+            <section className={`flex items-center pt-2 pb-4 `}>
                 {isPosting ? (
                     <div className="flex-grow ">
                         <FadeLoader
@@ -217,10 +240,11 @@ function PostCard({
                     <>
                         <textarea
                             className={`max-h-[5.125rem] flex-grow container bg-main focus:outline-none 
-      resize-none text-[0.875rem] font-light leading-[1.4rem] `}
+                                        resize-none text-[0.875rem] font-normal 
+                                        leading-[1.4rem] `}
                             placeholder="Add a comment..."
                             onChange={(e) => {
-                                handleInput(e, cursor);
+                                handleInput(e);
                             }}
                             onClick={(e) => {
                                 cursor.current = e.target.selectionStart;
@@ -251,26 +275,28 @@ function PostCard({
                     }}
                     color={"#9CA3AF"}
                 />
-            </div>
-            <PostModal
-                isOpen={isOpen}
-                handleClose={() => setIsOpen(false)}
-                img={imageUrl}
-                ratio={ratio}
-                author={author.username}
-                avatar={author.avatarUrl}
-                caption={caption}
-                createdAt={createdAt}
-                postId={_id}
-                comment={comment}
-                setComment={setComment}
-                handleInput={handleInput}
-                postComment={postComment}
-                user={user}
-                commentArr={commentArrModal}
-                setCommentArr={setCommentArrModal}
-            />
-        </div>
+            </section>
+            {isOpen ? (
+                <PostModal
+                    handleClose={() => setIsOpen(false)}
+                    img={imageUrl}
+                    ratio={ratio}
+                    author={author.username}
+                    avatar={author.avatarUrl}
+                    caption={caption}
+                    createdAt={createdAt}
+                    postId={_id}
+                    comment={comment}
+                    setComment={setComment}
+                    handleInput={handleInput}
+                    postComment={postComment}
+                    user={user}
+                    cursor={cursor}
+                    commentArr={commentArrModal}
+                    setCommentArr={setCommentArrModal}
+                />
+            ) : null}
+        </article>
     );
 }
 

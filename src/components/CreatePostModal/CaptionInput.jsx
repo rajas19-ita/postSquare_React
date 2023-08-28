@@ -32,7 +32,7 @@ function CaptionInput({ setCaption, caption }) {
                 <EmojiPicker
                     handleText={setCaption}
                     maxLength={250}
-                    position="top"
+                    position="bottom"
                     cursor={cursor}
                     text={caption}
                 />
