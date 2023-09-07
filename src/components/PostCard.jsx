@@ -29,13 +29,13 @@ function PostCard({
 
     useEffect(() => {
         return () => {
-            console.log(firstUnmount.current);
-            if (!firstUnmount.current) {
-                console.log(author.avatarUrl);
-                URL.revokeObjectURL(author.avatarUrl);
-                URL.revokeObjectURL(imageUrl);
-            }
-            firstUnmount.current = false;
+            // console.log(firstUnmount.current);
+            // if (!firstUnmount.current) {
+            //     console.log(author.avatarUrl);
+            URL.revokeObjectURL(author.avatarUrl);
+            URL.revokeObjectURL(imageUrl);
+            // }
+            // firstUnmount.current = false;
         };
     }, []);
 
