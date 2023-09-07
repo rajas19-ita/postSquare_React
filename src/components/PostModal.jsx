@@ -1,7 +1,5 @@
 import ReactDom from "react-dom";
 import { FaTimes } from "react-icons/fa";
-import defaultPic from "../assets/avatar-1.jpg";
-
 import CommentList from "./CommentList";
 import EmojiPicker from "./EmojiPicker";
 import Comment from "./Comment";
@@ -70,13 +68,15 @@ function PostModal({
                     </div>
 
                     <div className="flex flex-col flex-grow ">
-                        <header className="flex items-center px-5 py-3.5 border-b-[1px] border-b-slate-600 ">
+                        <header className="flex items-center px-5 py-3.5 gap-3.5 border-b-[1px] border-b-slate-600 ">
                             <img
-                                src={avatar ? avatar : defaultPic}
+                                src={avatar}
                                 alt={`avatar of ${author}`}
-                                className="rounded-full w-9 h-9 mr-3.5"
+                                className={`rounded-full w-9 h-9 `}
                             />
-                            <h2 className="text-[0.875rem] font-medium tracking-wide">
+                            <h2
+                                className={`text-[0.875rem] font-medium tracking-wide`}
+                            >
                                 {author}
                             </h2>
                         </header>
@@ -84,8 +84,9 @@ function PostModal({
                             <Comment
                                 author={author}
                                 comment={caption}
-                                avatar={avatar ? avatar : defaultPic}
+                                avatar={avatar}
                                 createdAt={createdAt}
+                                caption={true}
                             />
                             {commentArr.map((comment, index) => (
                                 <Comment

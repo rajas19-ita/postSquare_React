@@ -8,7 +8,8 @@ function CommentList({ postId, user }) {
     const [commentArr, setCommentArr] = useState([]);
     const [isEnd, setIsEnd] = useState(false);
     const [timeStamp, setTimeStamp] = useState(Date.now());
-    const [isLoading, setIsLoading] = useState(false);
+    const [contentLoading, setContentLoading] = useState(false);
+    const [count, setCount] = useState([]);
     const commentsFetched = useRef(false);
 
     useEffect(() => {
@@ -19,7 +20,7 @@ function CommentList({ postId, user }) {
 
     const fetchComments = async () => {
         if (!isEnd) {
-            setIsLoading(true);
+            setContentLoading(true);
             const response = await fetch(
                 `${
                     import.meta.env.VITE_API_URL
@@ -35,17 +36,43 @@ function CommentList({ postId, user }) {
             const json = await response.json();
 
             if (response.ok) {
-                setIsLoading(false);
+                setContentLoading(false);
                 if (json.length === 0) {
                     setIsEnd(true);
                 } else {
+                    setCount(Array.from({ length: json.length }, (v, i) => i));
+
                     const cmnt = json[json.length - 1];
                     setTimeStamp(Date.parse(cmnt.createdAt));
-                    setCommentArr((comments) => [...comments, ...json]);
+
+                    const updatedComments = await fetchImg(json);
+                    setCommentArr((comments) => [
+                        ...comments,
+                        ...updatedComments,
+                    ]);
+                    setCount([]);
                 }
             }
         }
     };
+
+    const fetchImg = async (json) => {
+        const updatedComments = await Promise.all(
+            json.map(async (comment) => {
+                if (comment.author.avatarUrl) {
+                    const response = await fetch(comment.author.avatarUrl);
+                    const blob = await response.blob();
+                    comment.author.avatarUrl = URL.createObjectURL(blob);
+                } else {
+                    comment.author.avatarUrl = defaultPic;
+                }
+                return comment;
+            })
+        );
+
+        return updatedComments;
+    };
+
     return (
         <>
             {commentArr.map((cmnt) => (
@@ -53,17 +80,13 @@ function CommentList({ postId, user }) {
                     key={cmnt._id}
                     author={cmnt.author.username}
                     comment={cmnt.comment}
-                    avatar={
-                        cmnt.author.avatarUrl
-                            ? cmnt.author.avatarUrl
-                            : defaultPic
-                    }
+                    avatar={cmnt.author.avatarUrl}
                     createdAt={cmnt.createdAt}
                 />
             ))}
 
-            <div className="self-center ">
-                {isLoading ? (
+            {contentLoading ? (
+                <div className="self-center">
                     <FadeLoader
                         color="#8f8f8f"
                         height={7}
@@ -72,7 +95,9 @@ function CommentList({ postId, user }) {
                         width={3}
                         speedMultiplier={2}
                     />
-                ) : (
+                </div>
+            ) : count.length === 0 ? (
+                <div className="self-center">
                     <button
                         className="active:scale-95 transition-all ease-out enabled:active:text-white 
                          disabled:opacity-20 opacity-100"
@@ -82,8 +107,18 @@ function CommentList({ postId, user }) {
                     >
                         <GrAddCircle size={35} />
                     </button>
-                )}
-            </div>
+                </div>
+            ) : (
+                count.map((i) => (
+                    <div className="flex gap-3.5 w-full" key={i}>
+                        <div className="w-9 h-9 rounded-full animate-pulse bg-[#2A3A4B]"></div>
+                        <div className={`flex flex-col gap-1`}>
+                            <div className="w-20 h-4 rounded-sm animate-pulse bg-[#2A3A4B]"></div>
+                            <div className="h-4 w-64 rounded-sm animate-pulse bg-[#2A3A4B]"></div>
+                        </div>
+                    </div>
+                ))
+            )}
         </>
     );
 }

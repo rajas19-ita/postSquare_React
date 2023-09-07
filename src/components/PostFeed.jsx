@@ -6,7 +6,8 @@ import { FadeLoader } from "react-spinners";
 function PostFeed() {
     const postsFetched = useRef(false);
     const feedRef = useRef(null);
-    const { posts, fetchPosts, isLoading } = useFetchPost();
+    const { posts, fetchPosts, postLoading, count, imgLoading } =
+        useFetchPost();
     const tolerence = 1;
 
     useEffect(() => {
@@ -23,7 +24,7 @@ function PostFeed() {
                     feedRef.current.scrollTop +
                     tolerence
             ) >= feedRef.current.scrollHeight &&
-            !isLoading
+            !imgLoading
         ) {
             fetchPosts();
         }
@@ -39,7 +40,7 @@ function PostFeed() {
                 <PostCard key={post._id} post={post} />
             ))}
 
-            {isLoading ? (
+            {postLoading ? (
                 <div className="w-full">
                     <FadeLoader
                         color="#8f8f8f"
@@ -47,7 +48,17 @@ function PostFeed() {
                         speedMultiplier={2}
                     />
                 </div>
-            ) : null}
+            ) : count.length === 0 ? null : (
+                count.map((i) => (
+                    <div className="w-80 sm:w-[28rem] mb-4" key={i}>
+                        <div className="flex h-14 items-center">
+                            <div className="w-9 h-9 mr-3.5 rounded-full animate-pulse bg-[#2A3A4B]"></div>
+                            <div className="h-4 w-24 rounded-sm animate-pulse bg-[#2A3A4B]"></div>
+                        </div>
+                        <div className="w-full aspect-[16/9] animate-pulse bg-[#2A3A4B] rounded-sm"></div>
+                    </div>
+                ))
+            )}
         </div>
     );
 }

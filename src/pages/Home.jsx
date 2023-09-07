@@ -1,4 +1,5 @@
 import PostFeed from "../components/PostFeed";
+import { useState } from "react";
 
 function Home() {
     return (

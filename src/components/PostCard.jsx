@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PostModal from "../components/PostModal";
 import { BsDot } from "react-icons/bs";
-import { AiFillHeart, AiOutlineHeart, AiOutlineSmile } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { useState, useContext } from "react";
 import getTimePassed from "../utils/getTimePassed";
@@ -19,27 +19,27 @@ function PostCard({
     const [ratio, setRatio] = useState(null);
     const [totalLikes, setTotalLikes] = useState(likes);
     const { user } = useContext(AuthContext);
-    const [isLoading, setIsLoading] = useState(true);
     const cursor = useRef(0);
     const textAreaRef1 = useRef(null);
     const [comment, setComment] = useState("");
     const [isPosting, setIsPosting] = useState(false);
     const [commentArrCard, setCommentArrCard] = useState([]);
     const [commentArrModal, setCommentArrModal] = useState([]);
-    const [postImageLoaded, setPostImageLoaded] = useState(false);
-    const [authorImageLoaded, setAuthorImageLoaded] = useState(false);
+    const firstUnmount = useRef(true);
 
     useEffect(() => {
-        if (postImageLoaded && authorImageLoaded) {
-            setIsLoading(false);
-        }
-    }, [postImageLoaded, authorImageLoaded]);
+        return () => {
+            if (!firstUnmount.current) {
+                URL.revokeObjectURL(author.avatarUrl);
+                URL.revokeObjectURL(imageUrl);
+            }
+            firstUnmount.current = false;
+        };
+    }, []);
 
     const handleLoad = (e) => {
-        setPostImageLoaded(true);
         const { naturalWidth, naturalHeight } = e.target;
         const r = naturalWidth / naturalHeight;
-
         setRatio(Number(r.toFixed(1)));
     };
 
@@ -117,7 +117,6 @@ function PostCard({
                 setCommentArrModal((commentArr) => [latest, ...commentArr]);
             }
         }
-
         setComment("");
         setIsPosting(false);
     };
@@ -125,19 +124,10 @@ function PostCard({
     return (
         <article className="w-80 sm:w-[28rem] bg-main border-b-[1px] border-b-slate-600 ">
             <header className="flex h-16 px-1 items-center ">
-                {isLoading ? (
-                    <div className="w-9 h-9 mr-3.5 rounded-full animate-pulse bg-[#2A3A4B]"></div>
-                ) : null}
-
                 <img
-                    src={author.avatarUrl ? author.avatarUrl : defaultPic}
+                    src={author.avatarUrl}
                     alt={`avatar of ${author.username}`}
-                    className={`rounded-full w-9 h-9 mr-3.5 ${
-                        isLoading ? "hidden" : "block"
-                    }`}
-                    onLoad={() => {
-                        setAuthorImageLoaded(true);
-                    }}
+                    className={`rounded-full w-9 h-9 mr-3.5 `}
                 />
                 <h2 className="text-[0.875rem] font-medium tracking-wide mr-1 ">
                     {author.username}
@@ -148,16 +138,11 @@ function PostCard({
                 </span>
             </header>
 
-            {isLoading ? (
-                <div className="w-full aspect-[16/9] animate-pulse bg-[#2A3A4B]"></div>
-            ) : null}
             <div className="w-full">
                 <img
                     src={imageUrl}
                     onLoad={handleLoad}
-                    className={`${
-                        isLoading ? "hidden" : "block"
-                    } object-contain rounded-sm w-full`}
+                    className={` object-contain rounded-sm w-full`}
                 />
             </div>
 
