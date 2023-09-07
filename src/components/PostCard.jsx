@@ -29,7 +29,7 @@ function PostCard({
 
     useEffect(() => {
         return () => {
-            console.log(author.avatarUrl);
+            console.log(firstUnmount.current);
             if (!firstUnmount.current) {
                 console.log(author.avatarUrl);
                 URL.revokeObjectURL(author.avatarUrl);
