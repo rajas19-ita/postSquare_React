@@ -6,7 +6,7 @@ const useFetchPost = () => {
     const [posts, setPosts] = useState([]);
     const [lastTimeStamp, setLastTimeStamp] = useState(Date.now());
     const [postEnd, setPostEnd] = useState(false);
-    const [postLoading, setPostLoading] = useState(false);
+    const [contentLoading, setContentLoading] = useState(false);
     const [imgLoading, setImgLoading] = useState(false);
     const [count, setCount] = useState([]);
 
@@ -14,7 +14,7 @@ const useFetchPost = () => {
 
     const fetchPosts = async () => {
         if (!postEnd) {
-            setPostLoading(true);
+            setContentLoading(true);
             const response = await fetch(
                 `${
                     import.meta.env.VITE_API_URL
@@ -30,7 +30,7 @@ const useFetchPost = () => {
             const json = await response.json();
 
             if (response.ok) {
-                setPostLoading(false);
+                setContentLoading(false);
                 if (json.length === 0) {
                     setPostEnd(true);
                 } else {
@@ -75,7 +75,7 @@ const useFetchPost = () => {
         return updatedPosts;
     };
 
-    return { posts, fetchPosts, postLoading, count, imgLoading };
+    return { posts, fetchPosts, contentLoading, count, imgLoading };
 };
 
 export default useFetchPost;

@@ -2,14 +2,11 @@ import { useEffect } from "react";
 import getTimePassed from "../utils/getTimePassed";
 
 function Comment({ author, comment, avatar, createdAt, caption = false }) {
-    // const firstUnmount = useRef(true);
-
     useEffect(() => {
         return () => {
             if (!caption) {
                 URL.revokeObjectURL(avatar);
             }
-            // firstUnmount.current = false;
         };
     }, []);
     return (
