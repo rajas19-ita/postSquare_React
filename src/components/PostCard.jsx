@@ -25,7 +25,7 @@ function PostCard({
     const [isPosting, setIsPosting] = useState(false);
     const [commentArrCard, setCommentArrCard] = useState([]);
     const [commentArrModal, setCommentArrModal] = useState([]);
-    const firstUnmount = useRef(true);
+    // const firstUnmount = useRef(true);
 
     useEffect(() => {
         return () => {
