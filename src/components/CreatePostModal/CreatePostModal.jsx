@@ -101,7 +101,10 @@ function CreatePostModal({ handleClose }) {
     return ReactDOM.createPortal(
         <>
             <div className="fixed flex justify-center inset-0 bg-gray-950 bg-opacity-70 z-40 text-[#e6e6e6]">
-                <button className="fixed right-0 m-2" onClick={handleClose}>
+                <button
+                    className="fixed right-0 m-2 active:text-[#b8b8b8]"
+                    onClick={handleClose}
+                >
                     <FaTimes size={30} />
                 </button>
                 {renderPage()}

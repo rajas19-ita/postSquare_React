@@ -118,7 +118,7 @@ function Sidebar() {
                         <TbMenu2 size={30} />
                     </button>
                     {expMenu ? (
-                        <HamMenu setIsOpen={setExpMenu} menuRef={menuRef} />
+                        <HamMenu setIsOpen={setExpMenu} checkRef={menuRef} />
                     ) : null}
                 </div>
             </nav>

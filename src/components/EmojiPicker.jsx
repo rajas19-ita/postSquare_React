@@ -1,7 +1,7 @@
-import { BsEmojiSmile } from "react-icons/bs";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import useClickOutside from "../hooks/useClickOutside";
 
 function EmojiPicker({
     handleText,
@@ -10,10 +10,14 @@ function EmojiPicker({
     cursor,
     text,
     cb,
-    color,
+    setEmIsOpen,
+    emojiSectionRef,
 }) {
-    const [isOpen, setIsOpen] = useState(false);
     const emoji = useRef();
+
+    useClickOutside(() => {
+        setEmIsOpen(false);
+    }, emojiSectionRef);
 
     useEffect(() => {
         if (emoji.current) {
@@ -48,38 +52,23 @@ function EmojiPicker({
     };
 
     return (
-        <div className="cursor-pointer relative h-5">
-            <button
-                className="active:scale-90 transition-all ease-out active:text-[#b8b8b8] text-white"
-                onClick={() => {
-                    setIsOpen(!isOpen);
-                }}
-                aria-label="Select Emoji"
-                aria-expanded={isOpen}
-                aria-controls="post-emoji-picker"
-            >
-                <BsEmojiSmile className="h-5 w-5" color={color} />
-            </button>
-            {isOpen ? (
-                <div
-                    className={`absolute ${
-                        position === "top"
-                            ? "bottom-[125%]"
-                            : position === "bottom"
-                            ? "top-full"
-                            : "bottom-[125%] right-[5%]"
-                    } `}
-                    id="post-emoji-picker"
-                >
-                    <Picker
-                        data={data}
-                        onEmojiSelect={handleEmojiSelect}
-                        previewPosition="none"
-                        skinTonePosition="none"
-                        searchPosition="none"
-                    />
-                </div>
-            ) : null}
+        <div
+            className={`absolute ${
+                position === "top"
+                    ? "bottom-[125%]"
+                    : position === "bottom"
+                    ? "top-full"
+                    : "bottom-[125%] right-[5%]"
+            } `}
+            id="post-emoji-picker"
+        >
+            <Picker
+                data={data}
+                onEmojiSelect={handleEmojiSelect}
+                previewPosition="none"
+                skinTonePosition="none"
+                searchPosition="none"
+            />
         </div>
     );
 }

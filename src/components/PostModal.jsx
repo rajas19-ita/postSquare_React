@@ -3,7 +3,9 @@ import { FaTimes } from "react-icons/fa";
 import CommentList from "./CommentList";
 import EmojiPicker from "./EmojiPicker";
 import Comment from "./Comment";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { BsEmojiSmile } from "react-icons/bs";
+import useClickOutside from "../hooks/useClickOutside";
 
 function PostModal({
     img,
@@ -24,12 +26,26 @@ function PostModal({
     cursor,
 }) {
     const textAreaRef = useRef(null);
+    const emojiSectionRef = useRef();
+    const modalSectionRef = useRef();
+    const buttonRef = useRef();
+    const [emIsOpen, setEmIsOpen] = useState(false);
 
     const onClose = () => {
         setComment("");
         setCommentArr([]);
         handleClose();
     };
+
+    useClickOutside(
+        () => {
+            setComment("");
+            setCommentArr([]);
+            handleClose();
+        },
+        modalSectionRef,
+        buttonRef
+    );
 
     return ReactDom.createPortal(
         <>
@@ -38,6 +54,7 @@ function PostModal({
                     className="fixed right-0 m-2 active:text-[#b8b8b8] transition-all ease-out"
                     onClick={onClose}
                     aria-label="Close Post Modal"
+                    ref={buttonRef}
                 >
                     <FaTimes size={30} />
                 </button>
@@ -50,6 +67,7 @@ function PostModal({
                              bg-[#34495e] rounded-sm
                             
                             `}
+                    ref={modalSectionRef}
                 >
                     <div
                         className={`${
@@ -100,16 +118,37 @@ function PostModal({
                             <CommentList postId={postId} user={user} />
                         </main>
                         <section className="border-t-[1px] flex items-center border-t-slate-600 py-5 px-5 gap-4">
-                            <EmojiPicker
-                                handleText={setComment}
-                                position="top"
-                                cursor={cursor}
-                                cb={() => {
-                                    textAreaRef.current.style.height = "auto";
-                                    textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
-                                }}
-                                text={comment}
-                            />
+                            <div
+                                className="cursor-pointer relative h-5"
+                                ref={emojiSectionRef}
+                            >
+                                <button
+                                    className="active:scale-90 transition-all ease-out active:text-[#b8b8b8] text-white"
+                                    onClick={() => {
+                                        setEmIsOpen(!emIsOpen);
+                                    }}
+                                    aria-label="Select Emoji"
+                                    aria-expanded={emIsOpen}
+                                    aria-controls="post-emoji-picker"
+                                >
+                                    <BsEmojiSmile className="h-5 w-5" />
+                                </button>
+                                {emIsOpen ? (
+                                    <EmojiPicker
+                                        handleText={setComment}
+                                        position="top"
+                                        cursor={cursor}
+                                        emojiSectionRef={emojiSectionRef}
+                                        setEmIsOpen={setEmIsOpen}
+                                        cb={() => {
+                                            textAreaRef.current.style.height =
+                                                "auto";
+                                            textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
+                                        }}
+                                        text={comment}
+                                    />
+                                ) : null}
+                            </div>
 
                             <textarea
                                 className={`max-h-[5.125rem] flex-grow container bg-[#34495e] focus:outline-none 

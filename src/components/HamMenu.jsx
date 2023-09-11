@@ -2,31 +2,14 @@ import React from "react";
 import useLogout from "../hooks/useLogout";
 import { BiLogOut } from "react-icons/bi";
 import { FiEdit2 } from "react-icons/fi";
-import { useEffect, useRef } from "react";
+import useClickOutside from "../hooks/useClickOutside";
 import { Link } from "react-router-dom";
 
-const useClickOutside = (handler, domNode) => {
-    useEffect(() => {
-        const checkIfOutside = (e) => {
-            if (domNode.current) {
-                if (!domNode.current.contains(e.target)) {
-                    handler();
-                }
-            }
-        };
-        document.addEventListener("mousedown", checkIfOutside);
-
-        return () => {
-            document.removeEventListener("mousedown", checkIfOutside);
-        };
-    }, []);
-};
-
-function HamMenu({ setIsOpen, menuRef }) {
+function HamMenu({ setIsOpen, checkRef }) {
     const { logout } = useLogout();
     useClickOutside(() => {
         setIsOpen(false);
-    }, menuRef);
+    }, checkRef);
 
     return (
         <div

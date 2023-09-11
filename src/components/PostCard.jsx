@@ -9,6 +9,7 @@ import AuthContext from "../context/AuthContext";
 import defaultPic from "../assets/avatar-1.jpg";
 import { FadeLoader } from "react-spinners";
 import { useRef } from "react";
+import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "./EmojiPicker";
 
 function PostCard({
@@ -16,6 +17,7 @@ function PostCard({
 }) {
     const [liked, setLiked] = useState(hasLiked);
     const [isOpen, setIsOpen] = useState(false);
+    const [emIsOpen, setEmIsOpen] = useState(false);
     const [ratio, setRatio] = useState(null);
     const [totalLikes, setTotalLikes] = useState(likes);
     const { user } = useContext(AuthContext);
@@ -26,12 +28,11 @@ function PostCard({
     const [commentArrCard, setCommentArrCard] = useState([]);
     const [commentArrModal, setCommentArrModal] = useState([]);
     // const firstUnmount = useRef(true);
+    const emojiSectionRef = useRef();
 
     useEffect(() => {
         return () => {
-            // console.log(firstUnmount.current);
             // if (!firstUnmount.current) {
-            //     console.log(author.avatarUrl);
             URL.revokeObjectURL(author.avatarUrl);
             URL.revokeObjectURL(imageUrl);
             // }
@@ -250,18 +251,37 @@ function PostCard({
                         </button>
                     </>
                 )}
-
-                <EmojiPicker
-                    handleText={setComment}
-                    position="top-left"
-                    cursor={cursor}
-                    text={comment}
-                    cb={() => {
-                        textAreaRef1.current.style.height = "auto";
-                        textAreaRef1.current.style.height = `${textAreaRef1.current.scrollHeight}px`;
-                    }}
-                    color={"#9CA3AF"}
-                />
+                <div
+                    className="cursor-pointer relative h-5"
+                    ref={emojiSectionRef}
+                >
+                    <button
+                        className="active:scale-90 transition-all ease-out active:text-[#b8b8b8] text-white"
+                        onClick={() => {
+                            setEmIsOpen(!emIsOpen);
+                        }}
+                        aria-label="Select Emoji"
+                        aria-expanded={emIsOpen}
+                        aria-controls="post-emoji-picker"
+                    >
+                        <BsEmojiSmile className="h-5 w-5" color={"#9CA3AF"} />
+                    </button>
+                    {emIsOpen ? (
+                        <EmojiPicker
+                            handleText={setComment}
+                            position="top-left"
+                            cursor={cursor}
+                            text={comment}
+                            emojiSectionRef={emojiSectionRef}
+                            setEmIsOpen={setEmIsOpen}
+                            cb={() => {
+                                textAreaRef1.current.style.height = "auto";
+                                textAreaRef1.current.style.height = `${textAreaRef1.current.scrollHeight}px`;
+                            }}
+                            color={"#9CA3AF"}
+                        />
+                    ) : null}
+                </div>
             </section>
             {isOpen ? (
                 <PostModal
