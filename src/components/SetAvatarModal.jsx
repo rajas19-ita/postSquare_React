@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 import { useContext, useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../utils/cropImage";

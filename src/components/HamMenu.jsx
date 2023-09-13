@@ -1,7 +1,7 @@
 import React from "react";
 import useLogout from "../hooks/useLogout";
-import { BiLogOut } from "react-icons/bi";
-import { FiEdit2 } from "react-icons/fi";
+import { BiLogOut } from "@react-icons/all-files/bi/BiLogOut";
+import { FiEdit2 } from "@react-icons/all-files/fi/FiEdit2";
 import useClickOutside from "../hooks/useClickOutside";
 import { Link } from "react-router-dom";
 

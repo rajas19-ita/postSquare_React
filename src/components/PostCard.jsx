@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import PostModal from "../components/PostModal";
-import { BsDot } from "react-icons/bs";
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { TbMessageCircle2 } from "react-icons/tb";
+
+import { BsDot } from "@react-icons/all-files/bs/BsDot";
+import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
+import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
+
+import { BiMessageRounded } from "@react-icons/all-files/bi/BiMessageRounded";
 import { useState, useContext } from "react";
 import getTimePassed from "../utils/getTimePassed";
 import AuthContext from "../context/AuthContext";
 import defaultPic from "../assets/avatar-1.jpg";
 import { FadeLoader } from "react-spinners";
 import { useRef } from "react";
-import { BsEmojiSmile } from "react-icons/bs";
+
+import { HiOutlineEmojiHappy } from "@react-icons/all-files/hi/HiOutlineEmojiHappy";
 import EmojiPicker from "./EmojiPicker";
 
 function PostCard({
@@ -135,6 +139,7 @@ function PostCard({
                 <h2 className="text-[0.875rem] font-medium tracking-wide mr-1 ">
                     {author.username}
                 </h2>
+
                 <BsDot className="text-gray-400 text-sm mt-1 " />
                 <span className=" text-gray-500 mt-0.5 text-[0.8125rem] tracking-wide">
                     {getTimePassed(createdAt)}
@@ -167,7 +172,7 @@ function PostCard({
                         onClick={() => setIsOpen(true)}
                         aria-label="view comments"
                     >
-                        <TbMessageCircle2 size={27} />
+                        <BiMessageRounded size={27} />
                     </button>
                 </div>
                 <span className="font-medium text-[0.875rem] tracking-wide">
@@ -230,6 +235,7 @@ function PostCard({
                             className={`max-h-[5.125rem] flex-grow container bg-main focus:outline-none 
                                         resize-none text-[0.875rem] font-normal 
                                         leading-[1.4rem] `}
+                            name="comment"
                             placeholder="Add a comment..."
                             onChange={(e) => {
                                 handleInput(e);
@@ -264,7 +270,10 @@ function PostCard({
                         aria-expanded={emIsOpen}
                         aria-controls="post-emoji-picker"
                     >
-                        <BsEmojiSmile className="h-5 w-5" color={"#9CA3AF"} />
+                        <HiOutlineEmojiHappy
+                            className="h-5 w-5"
+                            color={"#9CA3AF"}
+                        />
                     </button>
                     {emIsOpen ? (
                         <EmojiPicker

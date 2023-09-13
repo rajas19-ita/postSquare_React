@@ -67,7 +67,9 @@ function EditProfile() {
                     <label
                         htmlFor="avatar-input"
                         aria-label="set avatar"
-                        className="active:scale-95 cursor-pointer absolute bottom-0 right-1 bg-[#34495e] p-2 rounded-md"
+                        className="active:scale-95 cursor-pointer absolute bottom-0 right-1 bg-sidebar
+                         p-2 rounded-md hover:bg-[#1f2a36] active:bg-[#1f2a36] 
+                         active:text-[#b8b8b8]  transition-all ease-out"
                     >
                         <AiOutlineEdit size={20} />
                     </label>

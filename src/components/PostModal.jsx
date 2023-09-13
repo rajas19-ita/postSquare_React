@@ -1,10 +1,11 @@
 import ReactDom from "react-dom";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
 import CommentList from "./CommentList";
 import EmojiPicker from "./EmojiPicker";
 import Comment from "./Comment";
 import { useRef, useState } from "react";
-import { BsEmojiSmile } from "react-icons/bs";
+
+import { FaRegSmile } from "@react-icons/all-files/fa/FaRegSmile";
 import useClickOutside from "../hooks/useClickOutside";
 
 function PostModal({
@@ -131,7 +132,7 @@ function PostModal({
                                     aria-expanded={emIsOpen}
                                     aria-controls="post-emoji-picker"
                                 >
-                                    <BsEmojiSmile className="h-5 w-5" />
+                                    <FaRegSmile className=" w-5 h-5" />
                                 </button>
                                 {emIsOpen ? (
                                     <EmojiPicker
@@ -163,6 +164,7 @@ function PostModal({
                                 value={comment}
                                 rows={1}
                                 ref={textAreaRef}
+                                name="comment"
                             />
                             <button
                                 className={`text-[0.875rem] font-medium tracking-wide text-blue-400 
