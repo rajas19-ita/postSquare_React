@@ -1,9 +1,6 @@
 import logo from "../assets/logo.png";
-import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
-import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
-import { GoHome } from "@react-icons/all-files/go/GoHome";
-
-import { GoHomeFill, GoPerson, GoPersonFill } from "react-icons/go";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { GoHome, GoHomeFill, GoPerson, GoPersonFill } from "react-icons/go";
 import { TbMenu2 } from "react-icons/tb";
 import { RiMessengerLine, RiMessengerFill } from "react-icons/ri";
 import { BsPlusSquare, BsPlusSquareFill } from "react-icons/bs";

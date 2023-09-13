@@ -1,11 +1,11 @@
 import ReactDom from "react-dom";
-import { FaTimes } from "@react-icons/all-files/fa/FaTimes";
+import { FaTimes } from "react-icons/fa";
 import CommentList from "./CommentList";
 import EmojiPicker from "./EmojiPicker";
 import Comment from "./Comment";
 import { useRef, useState } from "react";
 
-import { FaRegSmile } from "@react-icons/all-files/fa/FaRegSmile";
+import { FaRegSmile } from "react-icons/fa";
 import useClickOutside from "../hooks/useClickOutside";
 
 function PostModal({

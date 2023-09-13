@@ -1,6 +1,7 @@
 import Comment from "./Comment";
 import { useState, useRef, useEffect } from "react";
-import { GrAddCircle } from "@react-icons/all-files/gr/GrAddCircle";
+import { GrAddCircle } from "react-icons/gr";
+
 import defaultPic from "../assets/avatar-1.jpg";
 import { FadeLoader } from "react-spinners";
 

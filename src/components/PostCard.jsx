@@ -1,19 +1,15 @@
 import React, { useEffect } from "react";
 import PostModal from "../components/PostModal";
-
-import { BsDot } from "@react-icons/all-files/bs/BsDot";
-import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
-import { AiOutlineHeart } from "@react-icons/all-files/ai/AiOutlineHeart";
-
-import { BiMessageRounded } from "@react-icons/all-files/bi/BiMessageRounded";
+import { BsDot } from "react-icons/bs";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { TbMessageCircle2 } from "react-icons/tb";
 import { useState, useContext } from "react";
 import getTimePassed from "../utils/getTimePassed";
 import AuthContext from "../context/AuthContext";
 import defaultPic from "../assets/avatar-1.jpg";
 import { FadeLoader } from "react-spinners";
 import { useRef } from "react";
-
-import { HiOutlineEmojiHappy } from "@react-icons/all-files/hi/HiOutlineEmojiHappy";
+import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "./EmojiPicker";
 
 function PostCard({
@@ -172,7 +168,7 @@ function PostCard({
                         onClick={() => setIsOpen(true)}
                         aria-label="view comments"
                     >
-                        <BiMessageRounded size={27} />
+                        <TbMessageCircle2 size={27} />
                     </button>
                 </div>
                 <span className="font-medium text-[0.875rem] tracking-wide">
@@ -270,10 +266,7 @@ function PostCard({
                         aria-expanded={emIsOpen}
                         aria-controls="post-emoji-picker"
                     >
-                        <HiOutlineEmojiHappy
-                            className="h-5 w-5"
-                            color={"#9CA3AF"}
-                        />
+                        <BsEmojiSmile className="h-5 w-5" color={"#9CA3AF"} />
                     </button>
                     {emIsOpen ? (
                         <EmojiPicker
