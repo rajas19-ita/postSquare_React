@@ -3,7 +3,6 @@ import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 import { useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../../utils/cropImage";
-import { Buffer } from "buffer";
 
 function ImageEditPage({
     img,
@@ -27,11 +26,7 @@ function ImageEditPage({
         setPage("POST_EDIT");
 
         const croppedImg = await getCroppedImg(img, croppedAreaPixels);
-        console.log(croppedImg);
 
-        const buffer = Buffer.from(croppedImg.substring(img.indexOf(",") + 1));
-        console.log("Byte length: " + buffer.length);
-        console.log("MB: " + buffer.length / 1e6);
         setCroppedImg(croppedImg);
         setLoading(false);
     };

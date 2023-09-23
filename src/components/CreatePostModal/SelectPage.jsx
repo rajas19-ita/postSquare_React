@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 function SelectPage({ setPage, setImg }) {
     const handleFile = (e) => {
         if (e.target.files[0].size > 2097152) {
-            toast.info("File should be less than 2MB!", {
+            toast.info("File should be less than 1MB!", {
                 position: toast.POSITION.TOP_CENTER,
             });
 

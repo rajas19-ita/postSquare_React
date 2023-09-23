@@ -27,16 +27,16 @@ function PostCard({
     const [isPosting, setIsPosting] = useState(false);
     const [commentArrCard, setCommentArrCard] = useState([]);
     const [commentArrModal, setCommentArrModal] = useState([]);
-    // const firstUnmount = useRef(true);
+    const firstUnmount = useRef(true);
     const emojiSectionRef = useRef();
 
     useEffect(() => {
         return () => {
-            // if (!firstUnmount.current) {
-            URL.revokeObjectURL(author.avatarUrl);
-            URL.revokeObjectURL(imageUrl);
-            // }
-            // firstUnmount.current = false;
+            if (!firstUnmount.current) {
+                URL.revokeObjectURL(author.avatarUrl);
+                URL.revokeObjectURL(imageUrl);
+            }
+            firstUnmount.current = false;
         };
     }, []);
 
@@ -142,13 +142,11 @@ function PostCard({
                 </span>
             </header>
 
-            <div className="w-full">
-                <img
-                    src={imageUrl}
-                    onLoad={handleLoad}
-                    className={` object-contain rounded-sm w-full`}
-                />
-            </div>
+            <img
+                src={imageUrl}
+                onLoad={handleLoad}
+                className={` object-contain rounded-sm w-full`}
+            />
 
             <section className="flex h-10 mt-1 items-center justify-between">
                 <div className="flex gap-4">
@@ -280,7 +278,6 @@ function PostCard({
                                 textAreaRef1.current.style.height = "auto";
                                 textAreaRef1.current.style.height = `${textAreaRef1.current.scrollHeight}px`;
                             }}
-                            color={"#9CA3AF"}
                         />
                     ) : null}
                 </div>

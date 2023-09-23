@@ -1,8 +1,12 @@
 import EmojiPicker from "../EmojiPicker";
-import { useRef } from "react";
+import { useState, useRef } from "react";
+import { BsEmojiSmile } from "react-icons/bs";
 
 function CaptionInput({ setCaption, caption }) {
     const cursor = useRef(0);
+    const emojiSectionRef = useRef();
+    const [emIsOpen, setEmIsOpen] = useState(false);
+
     const handleChange = (e) => {
         let value = e.target.value;
         if (value.length <= 250) {
@@ -29,13 +33,34 @@ function CaptionInput({ setCaption, caption }) {
             ></textarea>
 
             <div className="flex justify-between ">
-                <EmojiPicker
-                    handleText={setCaption}
-                    maxLength={250}
-                    position="bottom"
-                    cursor={cursor}
-                    text={caption}
-                />
+                <div
+                    className="cursor-pointer relative h-5"
+                    ref={emojiSectionRef}
+                >
+                    <button
+                        className="active:scale-90 transition-all ease-out active:text-[#b8b8b8] text-white"
+                        onClick={() => {
+                            setEmIsOpen(!emIsOpen);
+                        }}
+                        aria-label="Select Emoji"
+                        aria-expanded={emIsOpen}
+                        aria-controls="post-emoji-picker"
+                    >
+                        <BsEmojiSmile className=" w-5 h-5" />
+                    </button>
+                    {emIsOpen ? (
+                        <EmojiPicker
+                            handleText={setCaption}
+                            maxLength={250}
+                            position="bottom"
+                            cursor={cursor}
+                            emojiSectionRef={emojiSectionRef}
+                            setEmIsOpen={setEmIsOpen}
+                            text={caption}
+                        />
+                    ) : null}
+                </div>
+
                 <span className="text-inactive text-sm" id="caption-char-count">
                     {caption.length}/250
                 </span>

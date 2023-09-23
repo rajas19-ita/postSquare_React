@@ -5,7 +5,7 @@ import EmojiPicker from "./EmojiPicker";
 import Comment from "./Comment";
 import { useRef, useState } from "react";
 
-import { FaRegSmile } from "react-icons/fa";
+import { BsEmojiSmile } from "react-icons/bs";
 import useClickOutside from "../hooks/useClickOutside";
 
 function PostModal({
@@ -132,7 +132,7 @@ function PostModal({
                                     aria-expanded={emIsOpen}
                                     aria-controls="post-emoji-picker"
                                 >
-                                    <FaRegSmile className=" w-5 h-5" />
+                                    <BsEmojiSmile className=" w-5 h-5" />
                                 </button>
                                 {emIsOpen ? (
                                     <EmojiPicker
