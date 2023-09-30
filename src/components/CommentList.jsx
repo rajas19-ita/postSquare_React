@@ -46,33 +46,30 @@ function CommentList({ postId, user }) {
                     const cmnt = json[json.length - 1];
                     setTimeStamp(Date.parse(cmnt.createdAt));
 
-                    const updatedComments = await fetchImg(json);
-                    setCommentArr((comments) => [
-                        ...comments,
-                        ...updatedComments,
-                    ]);
+                    // const updatedComments = await fetchImg(json);
+                    setCommentArr((comments) => [...comments, ...json]);
                     setCount([]);
                 }
             }
         }
     };
 
-    const fetchImg = async (json) => {
-        const updatedComments = await Promise.all(
-            json.map(async (comment) => {
-                if (comment.author.avatarUrl) {
-                    const response = await fetch(comment.author.avatarUrl);
-                    const blob = await response.blob();
-                    comment.author.avatarUrl = URL.createObjectURL(blob);
-                } else {
-                    comment.author.avatarUrl = defaultPic;
-                }
-                return comment;
-            })
-        );
+    // const fetchImg = async (json) => {
+    //     const updatedComments = await Promise.all(
+    //         json.map(async (comment) => {
+    //             if (comment.author.avatarUrl) {
+    //                 const response = await fetch(comment.author.avatarUrl);
+    //                 const blob = await response.blob();
+    //                 comment.author.avatarUrl = URL.createObjectURL(blob);
+    //             } else {
+    //                 comment.author.avatarUrl = defaultPic;
+    //             }
+    //             return comment;
+    //         })
+    //     );
 
-        return updatedComments;
-    };
+    //     return updatedComments;
+    // };
 
     return (
         <>

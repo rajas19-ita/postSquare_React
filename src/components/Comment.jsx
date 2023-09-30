@@ -1,21 +1,22 @@
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 import getTimePassed from "../utils/getTimePassed";
+import defaultPic from "../assets/avatar-1.jpg";
 
 function Comment({ author, comment, avatar, createdAt, caption = false }) {
-    const firstUnmount = useRef(true);
+    // const firstUnmount = useRef(true);
 
-    useEffect(() => {
-        return () => {
-            if (!firstUnmount.current && !caption) {
-                URL.revokeObjectURL(avatar);
-            }
-            firstUnmount.current = false;
-        };
-    }, []);
+    // useEffect(() => {
+    //     return () => {
+    //         if (!firstUnmount.current && !caption) {
+    //             URL.revokeObjectURL(avatar);
+    //         }
+    //         firstUnmount.current = false;
+    //     };
+    // }, []);
     return (
         <div className="flex gap-3.5 w-full">
             <img
-                src={avatar}
+                src={avatar ? avatar : defaultPic}
                 alt={`avatar of ${author}`}
                 className={`rounded-full w-9 h-9 self-start`}
             />

@@ -4,6 +4,7 @@ import CommentList from "./CommentList";
 import EmojiPicker from "./EmojiPicker";
 import Comment from "./Comment";
 import { useRef, useState } from "react";
+import defaultPic from "../assets/avatar-1.jpg";
 
 import { BsEmojiSmile } from "react-icons/bs";
 import useClickOutside from "../hooks/useClickOutside";
@@ -89,7 +90,7 @@ function PostModal({
                     <div className="flex flex-col flex-grow ">
                         <header className="flex items-center px-5 py-3.5 gap-3.5 border-b-[1px] border-b-slate-600 ">
                             <img
-                                src={avatar}
+                                src={avatar ? avatar : defaultPic}
                                 alt={`avatar of ${author}`}
                                 className={`rounded-full w-9 h-9 `}
                             />

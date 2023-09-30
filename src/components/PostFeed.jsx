@@ -49,6 +49,16 @@ function PostFeed() {
                         speedMultiplier={2}
                     />
                 </div>
+            ) : null}
+
+            {/* {contentLoading ? (
+                <div className="w-full">
+                    <FadeLoader
+                        color="#8f8f8f"
+                        className="mx-auto mb-5 "
+                        speedMultiplier={2}
+                    />
+                </div>
             ) : count.length === 0 ? null : (
                 count.map((i) => (
                     <div className="w-80 sm:w-[28rem] mb-4" key={i}>
@@ -59,7 +69,7 @@ function PostFeed() {
                         <div className="w-full aspect-[16/9] animate-pulse bg-[#2A3A4B] rounded-sm"></div>
                     </div>
                 ))
-            )}
+            )} */}
         </div>
     );
 }

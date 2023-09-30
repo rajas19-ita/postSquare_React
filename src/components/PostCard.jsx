@@ -27,18 +27,25 @@ function PostCard({
     const [isPosting, setIsPosting] = useState(false);
     const [commentArrCard, setCommentArrCard] = useState([]);
     const [commentArrModal, setCommentArrModal] = useState([]);
-    const firstUnmount = useRef(true);
+    const [avatarLoading, setAvatarLoading] = useState(true);
+    const [imageLoading, setImageLoading] = useState(true);
+    const [imageLowRes, setImageLowRes] = useState(null);
+    // const firstUnmount = useRef(true);
     const emojiSectionRef = useRef();
 
-    useEffect(() => {
-        return () => {
-            if (!firstUnmount.current) {
-                URL.revokeObjectURL(author.avatarUrl);
-                URL.revokeObjectURL(imageUrl);
-            }
-            firstUnmount.current = false;
-        };
-    }, []);
+    // useEffect(() => {
+    //     slash();
+    // });
+
+    // useEffect(() => {
+    //     return () => {
+    //         if (!firstUnmount.current) {
+    //             URL.revokeObjectURL(author.avatarUrl);
+    //             URL.revokeObjectURL(imageUrl);
+    //         }
+    //         firstUnmount.current = false;
+    //     };
+    // }, []);
 
     const handleLoad = (e) => {
         const { naturalWidth, naturalHeight } = e.target;
@@ -124,13 +131,28 @@ function PostCard({
         setIsPosting(false);
     };
 
+    // const slash = () => {
+    //     const lastSlashIndex = imageUrl.lastIndexOf("/");
+    //     const firstPart = imageUrl.slice(0, lastSlashIndex);
+    //     const secondPart = imageUrl.slice(lastSlashIndex + 1);
+    //     setImageLowRes(`${firstPart + "/tr:w-64,h-64/" + secondPart}`);
+    // };
+
     return (
         <article className="w-80 sm:w-[28rem] bg-main border-b-[1px] border-b-slate-600 ">
             <header className="flex h-16 px-1 items-center ">
+                {avatarLoading ? (
+                    <div className="w-9 h-9 mr-3.5 rounded-full animate-pulse bg-[#2A3A4B]"></div>
+                ) : null}
                 <img
-                    src={author.avatarUrl}
+                    src={author.avatarUrl ? author.avatarUrl : defaultPic}
                     alt={`avatar of ${author.username}`}
-                    className={`rounded-full w-9 h-9 mr-3.5 `}
+                    className={`rounded-full w-9 h-9 mr-3.5 ${
+                        avatarLoading ? "hidden" : "block"
+                    }`}
+                    onLoad={() => {
+                        setAvatarLoading(false);
+                    }}
                 />
                 <h2 className="text-[0.875rem] font-medium tracking-wide mr-1 ">
                     {author.username}
@@ -145,7 +167,7 @@ function PostCard({
             <img
                 src={imageUrl}
                 onLoad={handleLoad}
-                className={` object-contain rounded-sm w-full`}
+                className={`object-contain rounded-sm w-full`}
             />
 
             <section className="flex h-10 mt-1 items-center justify-between">
