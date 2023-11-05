@@ -42,7 +42,7 @@ function PostEditPage({
             <div className="flex h-[89%]">
                 <div
                     className={`${
-                        aspect === 0.8 ? "aspect-[4/5]" : "aspect-[13/16]"
+                        aspect <= 0.8 ? "aspect-[4/5]" : "aspect-[13/16]"
                     }  h-full rounded-bl-md hidden md:flex md:flex-col md:items-center md:justify-center
           border-r-[1px] border-r-slate-600`}
                 >

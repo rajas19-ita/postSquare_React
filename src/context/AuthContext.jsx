@@ -36,6 +36,7 @@ const authReducer = (state, action) => {
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, { user: null });
     const [isLoading, setIsLoading] = useState(true);
+    const [isNew, setIsNew] = useState(false);
 
     useEffect(() => {
         try {
@@ -64,7 +65,9 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ ...state, isLoading, dispatch }}>
+        <AuthContext.Provider
+            value={{ ...state, isLoading, dispatch, isNew, setIsNew }}
+        >
             {children}
         </AuthContext.Provider>
     );

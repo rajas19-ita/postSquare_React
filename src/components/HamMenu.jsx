@@ -14,7 +14,7 @@ function HamMenu({ setIsOpen, checkRef }) {
     return (
         <div
             className={`absolute flex flex-col items-stretch w-36 p-2 rounded-md 
-                top-[115%] md:top-auto md:left-0 md:bottom-[115%] bg-[#34495e] md:bg-[#2f4255] shadow-sm
+                top-[115%] md:top-auto md:left-0 md:bottom-[115%] bg-[#34495e] md:bg-[#2f4255] shadow-sm z-30
                 `}
             id="hammenu"
         >

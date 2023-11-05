@@ -62,7 +62,7 @@ function PostModal({
                 </button>
                 <div
                     className={`flex self-center w-full max-w-xs aspect-[4/6] mx-10 sm:max-w-[53rem] ${
-                        ratio === 0.8
+                        ratio <= 0.8
                             ? " sm:aspect-[3/2.1] md:aspect-[3.2/2] "
                             : " sm:aspect-[3/2] md:aspect-[3/1.8] "
                     }
@@ -73,7 +73,7 @@ function PostModal({
                 >
                     <div
                         className={`${
-                            ratio === 0.8
+                            ratio <= 0.8
                                 ? "sm:aspect-[2.8/5] md:aspect-[3.8/5]  lg:aspect-[4/5] "
                                 : "sm:aspect-[2.5/4] md:aspect-[3.1/4] lg:aspect-[13/16]  "
                         }  bg-[#0a0f13] hidden sm:block h-full rounded-l-sm
@@ -82,18 +82,21 @@ function PostModal({
                     >
                         <img
                             src={img}
-                            className="h-full object-contain rounded-l-sm"
+                            className="h-full w-full object-contain rounded-l-sm"
                             alt="Post Image"
                         />
                     </div>
 
                     <div className="flex flex-col flex-grow ">
                         <header className="flex items-center px-5 py-3.5 gap-3.5 border-b-[1px] border-b-slate-600 ">
-                            <img
-                                src={avatar ? avatar : defaultPic}
-                                alt={`avatar of ${author}`}
-                                className={`rounded-full w-9 h-9 `}
-                            />
+                            <div className={`rounded-full w-9 h-9 `}>
+                                <img
+                                    src={avatar ? avatar : defaultPic}
+                                    alt={`avatar of ${author}`}
+                                    className={`rounded-full`}
+                                />
+                            </div>
+
                             <h2
                                 className={`text-[0.875rem] font-medium tracking-wide`}
                             >

@@ -9,9 +9,13 @@ import { Link, useLocation } from "react-router-dom";
 import CreatePostModal from "./CreatePostModal/CreatePostModal";
 import HamMenu from "./HamMenu";
 import AuthContext from "../context/AuthContext";
+import NotificationDrawer from "./NotificationDrawer";
+import MessageDrawer from "./MessageDrawer";
 
 function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [notiOpen, setNotiOpen] = useState(false);
+    const [msgOpen, setMsgOpen] = useState(false);
     const [expMenu, setExpMenu] = useState(false);
     const menuRef = useRef();
     const { user } = useContext(AuthContext);
@@ -20,22 +24,29 @@ function Sidebar() {
     return (
         <div
             className="fixed bottom-0 w-full h-16 bg-sidebar 
-    flex md:flex-col p-4 md:h-full md:w-20 z-10 items-center md:gap-[4.5rem]"
+    flex md:flex-col  md:h-full md:w-20 z-30 items-center md:gap-[4.5rem]  "
         >
-            <Link to="/" className="hidden md:block mt-2 ">
+            <Link to="/" className="hidden md:block mt-7 w-12 h-12">
                 <img src={logo} alt="postSquare logo" />
             </Link>
 
             <nav className="flex md:flex-col flex-grow">
-                <ul className="flex flex-grow justify-around md:justify-start md:flex-col md:gap-5 ">
+                <ul className="flex flex-grow justify-around md:justify-start md:flex-col md:gap-4 ">
                     <li>
                         <Link
                             to="/"
                             className="p-[0.5rem] block rounded-[0.3rem] active:scale-90 active:text-[#b8b8b8] 
             transition-all ease-out hover:bg-[#2f4255]"
                             aria-label="Home"
+                            onClick={() => {
+                                setNotiOpen(false);
+                                setMsgOpen(false);
+                            }}
                         >
-                            {location.pathname === "/" && !isOpen ? (
+                            {location.pathname === "/" &&
+                            !isOpen &&
+                            !notiOpen &&
+                            !msgOpen ? (
                                 <GoHomeFill size={27} />
                             ) : (
                                 <GoHome size={27} />
@@ -49,8 +60,15 @@ function Sidebar() {
                             className="active:scale-90 active:text-[#b8b8b8] transition-all ease-out
           p-[0.5rem] rounded-[0.3rem] hover:bg-[#2f4255] block"
                             aria-label="Profile"
+                            onClick={() => {
+                                setNotiOpen(false);
+                                setMsgOpen(false);
+                            }}
                         >
-                            {location.pathname === "/editProfile" && !isOpen ? (
+                            {location.pathname === "/editProfile" &&
+                            !isOpen &&
+                            !notiOpen &&
+                            !msgOpen ? (
                                 <GoPersonFill size={27} />
                             ) : (
                                 <GoPerson size={27} />
@@ -73,38 +91,45 @@ function Sidebar() {
                         </button>
                     </li>
                     <li>
-                        <Link
-                            to="/notification"
+                        <button
                             className="active:scale-90 active:text-[#b8b8b8] transition-all ease-out
                                    p-[0.5rem] rounded-[0.3rem] hover:bg-[#2f4255] block"
+                            disabled={user ? false : true}
+                            onClick={() => {
+                                setNotiOpen(!notiOpen);
+                                setMsgOpen(false);
+                            }}
                             aria-label="View Notifications"
                         >
-                            {location.pathname === "/notification" &&
-                            !isOpen ? (
+                            {notiOpen && !isOpen ? (
                                 <AiFillHeart size={27} />
                             ) : (
                                 <AiOutlineHeart size={27} />
                             )}
-                        </Link>
+                        </button>
                     </li>
                     <li>
-                        <Link
-                            to="/message"
+                        <button
                             className="active:scale-90 active:text-[#b8b8b8] transition-all ease-out
                             p-[0.5rem] rounded-[0.3rem] hover:bg-[#2f4255] block"
+                            disabled={user ? false : true}
                             aria-label="View Messages"
+                            onClick={() => {
+                                setNotiOpen(false);
+                                setMsgOpen(!msgOpen);
+                            }}
                         >
-                            {location.pathname === "/message" && !isOpen ? (
+                            {msgOpen && !isOpen && !notiOpen ? (
                                 <RiMessengerFill size={27} />
                             ) : (
                                 <RiMessengerLine size={27} />
                             )}
-                        </Link>
+                        </button>
                     </li>
                 </ul>
 
                 <div
-                    className="fixed top-3 md:relative md:block "
+                    className="fixed top-3 md:relative md:block mb-4"
                     ref={menuRef}
                 >
                     <button
@@ -125,6 +150,8 @@ function Sidebar() {
             {isOpen ? (
                 <CreatePostModal handleClose={() => setIsOpen(false)} />
             ) : null}
+            {notiOpen ? <NotificationDrawer /> : null}
+            {msgOpen ? <MessageDrawer /> : null}
         </div>
     );
 }

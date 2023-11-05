@@ -32,9 +32,11 @@ function CreatePostModal({ handleClose }) {
         setIsPosting(true);
 
         const file = dataURLtoFile(croppedImg, "postImage");
+
         const data = new FormData();
         data.set("caption", caption);
         data.set("postImage", file);
+        data.set("aspect", aspect);
 
         const response = await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
             method: "POST",

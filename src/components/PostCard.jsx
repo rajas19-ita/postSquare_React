@@ -13,12 +13,21 @@ import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "./EmojiPicker";
 
 function PostCard({
-    post: { caption, imageUrl, createdAt, author, _id, likes, hasLiked },
+    post: {
+        caption,
+        imageUrl,
+        createdAt,
+        author,
+        _id,
+        likes,
+        hasLiked,
+        aspect,
+    },
 }) {
     const [liked, setLiked] = useState(hasLiked);
     const [isOpen, setIsOpen] = useState(false);
     const [emIsOpen, setEmIsOpen] = useState(false);
-    const [ratio, setRatio] = useState(null);
+    // const [ratio, setRatio] = useState(null);
     const [totalLikes, setTotalLikes] = useState(likes);
     const { user } = useContext(AuthContext);
     const cursor = useRef(0);
@@ -29,28 +38,11 @@ function PostCard({
     const [commentArrModal, setCommentArrModal] = useState([]);
     const [avatarLoading, setAvatarLoading] = useState(true);
     const [imageLoading, setImageLoading] = useState(true);
-    const [imageLowRes, setImageLowRes] = useState(null);
-    // const firstUnmount = useRef(true);
+
     const emojiSectionRef = useRef();
 
-    // useEffect(() => {
-    //     slash();
-    // });
-
-    // useEffect(() => {
-    //     return () => {
-    //         if (!firstUnmount.current) {
-    //             URL.revokeObjectURL(author.avatarUrl);
-    //             URL.revokeObjectURL(imageUrl);
-    //         }
-    //         firstUnmount.current = false;
-    //     };
-    // }, []);
-
     const handleLoad = (e) => {
-        const { naturalWidth, naturalHeight } = e.target;
-        const r = naturalWidth / naturalHeight;
-        setRatio(Number(r.toFixed(1)));
+        setImageLoading(false);
     };
 
     const handleLike = async (e) => {
@@ -131,29 +123,24 @@ function PostCard({
         setIsPosting(false);
     };
 
-    // const slash = () => {
-    //     const lastSlashIndex = imageUrl.lastIndexOf("/");
-    //     const firstPart = imageUrl.slice(0, lastSlashIndex);
-    //     const secondPart = imageUrl.slice(lastSlashIndex + 1);
-    //     setImageLowRes(`${firstPart + "/tr:w-64,h-64/" + secondPart}`);
-    // };
-
     return (
         <article className="w-80 sm:w-[28rem] bg-main border-b-[1px] border-b-slate-600 ">
             <header className="flex h-16 px-1 items-center ">
-                {avatarLoading ? (
-                    <div className="w-9 h-9 mr-3.5 rounded-full animate-pulse bg-[#2A3A4B]"></div>
-                ) : null}
-                <img
-                    src={author.avatarUrl ? author.avatarUrl : defaultPic}
-                    alt={`avatar of ${author.username}`}
-                    className={`rounded-full w-9 h-9 mr-3.5 ${
-                        avatarLoading ? "hidden" : "block"
+                <div
+                    className={`w-9 h-9 rounded-full mr-3.5 ${
+                        avatarLoading ? "animate-pulse bg-[#2A3A4B]" : null
                     }`}
-                    onLoad={() => {
-                        setAvatarLoading(false);
-                    }}
-                />
+                >
+                    <img
+                        src={author.avatarUrl ? author.avatarUrl : defaultPic}
+                        alt={`avatar of ${author.username}`}
+                        className="rounded-full"
+                        onLoad={() => {
+                            setAvatarLoading(false);
+                        }}
+                    />
+                </div>
+
                 <h2 className="text-[0.875rem] font-medium tracking-wide mr-1 ">
                     {author.username}
                 </h2>
@@ -163,12 +150,23 @@ function PostCard({
                     {getTimePassed(createdAt)}
                 </span>
             </header>
-
-            <img
-                src={imageUrl}
-                onLoad={handleLoad}
-                className={`object-contain rounded-sm w-full`}
-            />
+            <div
+                className={`w-full ${
+                    aspect <= 0.8 ? "aspect-[4/5]  " : null
+                } rounded-sm  ${
+                    imageLoading
+                        ? "animate-pulse bg-[#2A3A4B] aspect-[16/9]"
+                        : "bg-black"
+                }`}
+            >
+                <img
+                    src={imageUrl}
+                    onLoad={handleLoad}
+                    className={`object-contain rounded-sm w-full h-full ${
+                        imageLoading ? "hidden" : "block"
+                    }`}
+                />
+            </div>
 
             <section className="flex h-10 mt-1 items-center justify-between">
                 <div className="flex gap-4">
@@ -308,7 +306,7 @@ function PostCard({
                 <PostModal
                     handleClose={() => setIsOpen(false)}
                     img={imageUrl}
-                    ratio={ratio}
+                    ratio={aspect}
                     author={author.username}
                     avatar={author.avatarUrl}
                     caption={caption}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
 import { useState } from "react";
 import Cropper from "react-easy-crop";
@@ -13,6 +13,7 @@ function ImageEditPage({
     setPage,
     setLoading,
 }) {
+    const [ogAspect, setOgAspect] = useState();
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -24,7 +25,11 @@ function ImageEditPage({
     const handleCrop = async () => {
         setLoading(true);
         setPage("POST_EDIT");
-
+        if (aspect === ogAspect) {
+            setCroppedImg(img);
+            setLoading(false);
+            return;
+        }
         const croppedImg = await getCroppedImg(img, croppedAreaPixels);
 
         setCroppedImg(croppedImg);
@@ -76,6 +81,10 @@ function ImageEditPage({
                     onCropChange={setCrop}
                     onCropComplete={onCropComplete}
                     onZoomChange={setZoom}
+                    onMediaLoaded={(media) => {
+                        const r = media.naturalWidth / media.naturalHeight;
+                        setOgAspect(Number(r.toFixed(2)));
+                    }}
                     classes={{ containerClassName: "rounded-b-md" }}
                 />
                 <select
@@ -87,6 +96,7 @@ function ImageEditPage({
                     aria-label="select an aspect ratio"
                     aria-controls="cropper"
                 >
+                    <option value={ogAspect}>Orginal</option>
                     <option value={1}>1</option>
                     <option value={16 / 9}>16/9</option>
                     <option value={4 / 5}>4/5</option>

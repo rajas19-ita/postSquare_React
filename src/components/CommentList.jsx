@@ -2,15 +2,13 @@ import Comment from "./Comment";
 import { useState, useRef, useEffect } from "react";
 import { GrAddCircle } from "react-icons/gr";
 
-import defaultPic from "../assets/avatar-1.jpg";
 import { FadeLoader } from "react-spinners";
 
 function CommentList({ postId, user }) {
     const [commentArr, setCommentArr] = useState([]);
     const [isEnd, setIsEnd] = useState(false);
     const [timeStamp, setTimeStamp] = useState(Date.now());
-    const [contentLoading, setContentLoading] = useState(false);
-    const [count, setCount] = useState([]);
+    const [commentLoading, setCommentLoading] = useState(false);
     const commentsFetched = useRef(false);
 
     useEffect(() => {
@@ -21,7 +19,7 @@ function CommentList({ postId, user }) {
 
     const fetchComments = async () => {
         if (!isEnd) {
-            setContentLoading(true);
+            setCommentLoading(true);
             const response = await fetch(
                 `${
                     import.meta.env.VITE_API_URL
@@ -37,39 +35,18 @@ function CommentList({ postId, user }) {
             const json = await response.json();
 
             if (response.ok) {
-                setContentLoading(false);
                 if (json.length === 0) {
                     setIsEnd(true);
                 } else {
-                    setCount(Array.from({ length: json.length }, (v, i) => i));
-
                     const cmnt = json[json.length - 1];
                     setTimeStamp(Date.parse(cmnt.createdAt));
 
-                    // const updatedComments = await fetchImg(json);
                     setCommentArr((comments) => [...comments, ...json]);
-                    setCount([]);
                 }
             }
+            setCommentLoading(false);
         }
     };
-
-    // const fetchImg = async (json) => {
-    //     const updatedComments = await Promise.all(
-    //         json.map(async (comment) => {
-    //             if (comment.author.avatarUrl) {
-    //                 const response = await fetch(comment.author.avatarUrl);
-    //                 const blob = await response.blob();
-    //                 comment.author.avatarUrl = URL.createObjectURL(blob);
-    //             } else {
-    //                 comment.author.avatarUrl = defaultPic;
-    //             }
-    //             return comment;
-    //         })
-    //     );
-
-    //     return updatedComments;
-    // };
 
     return (
         <>
@@ -83,7 +60,7 @@ function CommentList({ postId, user }) {
                 />
             ))}
 
-            {contentLoading ? (
+            {commentLoading ? (
                 <div className="self-center">
                     <FadeLoader
                         color="#8f8f8f"
@@ -94,7 +71,7 @@ function CommentList({ postId, user }) {
                         speedMultiplier={2}
                     />
                 </div>
-            ) : count.length === 0 ? (
+            ) : (
                 <div className="self-center">
                     <button
                         className="active:scale-95 transition-all ease-out enabled:active:text-white 
@@ -106,16 +83,6 @@ function CommentList({ postId, user }) {
                         <GrAddCircle size={35} />
                     </button>
                 </div>
-            ) : (
-                count.map((i) => (
-                    <div className="flex gap-3.5 w-full" key={i}>
-                        <div className="w-9 h-9 rounded-full animate-pulse bg-[#2A3A4B]"></div>
-                        <div className={`flex flex-col gap-1`}>
-                            <div className="w-20 h-4 rounded-sm animate-pulse bg-[#2A3A4B]"></div>
-                            <div className="h-4 w-64 rounded-sm animate-pulse bg-[#2A3A4B]"></div>
-                        </div>
-                    </div>
-                ))
             )}
         </>
     );

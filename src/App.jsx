@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
 import EditProfile from "./pages/EditProfile";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "./context/AuthContext";
 import Sidebar from "./components/Sidebar";
 import AccessDeniedPage from "./pages/AccessDeniedPage";
