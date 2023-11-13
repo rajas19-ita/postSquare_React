@@ -20,6 +20,7 @@ function Sidebar() {
     const menuRef = useRef();
     const { user } = useContext(AuthContext);
     const location = useLocation();
+    const notiBtnRef = useRef(null);
 
     return (
         <div
@@ -100,6 +101,7 @@ function Sidebar() {
                                 setMsgOpen(false);
                             }}
                             aria-label="View Notifications"
+                            ref={notiBtnRef}
                         >
                             {notiOpen && !isOpen ? (
                                 <AiFillHeart size={27} />
@@ -150,7 +152,12 @@ function Sidebar() {
             {isOpen ? (
                 <CreatePostModal handleClose={() => setIsOpen(false)} />
             ) : null}
-            {notiOpen ? <NotificationDrawer /> : null}
+            {notiOpen ? (
+                <NotificationDrawer
+                    closeDrawer={() => setNotiOpen(false)}
+                    notiBtnRef={notiBtnRef}
+                />
+            ) : null}
             {msgOpen ? <MessageDrawer /> : null}
         </div>
     );

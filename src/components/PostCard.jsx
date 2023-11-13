@@ -11,6 +11,7 @@ import { FadeLoader } from "react-spinners";
 import { useRef } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "./EmojiPicker";
+import Avatar from "./Avatar";
 
 function PostCard({
     post: {
@@ -23,11 +24,12 @@ function PostCard({
         hasLiked,
         aspect,
     },
+    openModal = false,
+    notiCommentId = null,
 }) {
     const [liked, setLiked] = useState(hasLiked);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState();
     const [emIsOpen, setEmIsOpen] = useState(false);
-    // const [ratio, setRatio] = useState(null);
     const [totalLikes, setTotalLikes] = useState(likes);
     const { user } = useContext(AuthContext);
     const cursor = useRef(0);
@@ -36,10 +38,13 @@ function PostCard({
     const [isPosting, setIsPosting] = useState(false);
     const [commentArrCard, setCommentArrCard] = useState([]);
     const [commentArrModal, setCommentArrModal] = useState([]);
-    const [avatarLoading, setAvatarLoading] = useState(true);
     const [imageLoading, setImageLoading] = useState(true);
 
     const emojiSectionRef = useRef();
+
+    useEffect(() => {
+        setIsOpen(openModal);
+    }, [notiCommentId]);
 
     const handleLoad = (e) => {
         setImageLoading(false);
@@ -126,18 +131,12 @@ function PostCard({
     return (
         <article className="w-80 sm:w-[28rem] bg-main border-b-[1px] border-b-slate-600 ">
             <header className="flex h-16 px-1 items-center ">
-                <div
-                    className={`w-9 h-9 rounded-full mr-3.5 ${
-                        avatarLoading ? "animate-pulse bg-[#2A3A4B]" : null
-                    }`}
-                >
-                    <img
-                        src={author.avatarUrl ? author.avatarUrl : defaultPic}
-                        alt={`avatar of ${author.username}`}
-                        className="rounded-full"
-                        onLoad={() => {
-                            setAvatarLoading(false);
-                        }}
+                <div className={`w-9 h-9 rounded-full mr-3.5 `}>
+                    <Avatar
+                        pic={author.avatarUrl ? author.avatarUrl : defaultPic}
+                        username={author.username}
+                        userId={author._id}
+                        position="bottom"
                     />
                 </div>
 
@@ -305,6 +304,7 @@ function PostCard({
             {isOpen ? (
                 <PostModal
                     handleClose={() => setIsOpen(false)}
+                    authorId={author._id}
                     img={imageUrl}
                     ratio={aspect}
                     author={author.username}
@@ -320,6 +320,7 @@ function PostCard({
                     cursor={cursor}
                     commentArr={commentArrModal}
                     setCommentArr={setCommentArrModal}
+                    notiCommentId={notiCommentId}
                 />
             ) : null}
         </article>

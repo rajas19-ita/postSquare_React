@@ -3,9 +3,9 @@ import { FaTimes } from "react-icons/fa";
 import CommentList from "./CommentList";
 import EmojiPicker from "./EmojiPicker";
 import Comment from "./Comment";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import defaultPic from "../assets/avatar-1.jpg";
-
+import Avatar from "./Avatar";
 import { BsEmojiSmile } from "react-icons/bs";
 import useClickOutside from "../hooks/useClickOutside";
 
@@ -26,17 +26,41 @@ function PostModal({
     commentArr,
     setCommentArr,
     cursor,
+    authorId,
+    notiCommentId,
 }) {
     const textAreaRef = useRef(null);
     const emojiSectionRef = useRef();
     const modalSectionRef = useRef();
     const buttonRef = useRef();
     const [emIsOpen, setEmIsOpen] = useState(false);
+    const [notiComment, setNotiComment] = useState();
+
+    useEffect(() => {
+        if (notiCommentId) fetchComment();
+    }, []);
 
     const onClose = () => {
         setComment("");
         setCommentArr([]);
         handleClose();
+    };
+
+    const fetchComment = async () => {
+        const response = await fetch(
+            `${
+                import.meta.env.VITE_API_URL
+            }/posts/${postId}/comments/${notiCommentId}`,
+            {
+                headers: { authorization: `Bearer ${user.token}` },
+            }
+        );
+
+        const json = await response.json();
+
+        if (response.ok) {
+            setNotiComment(json);
+        }
     };
 
     useClickOutside(
@@ -90,10 +114,12 @@ function PostModal({
                     <div className="flex flex-col flex-grow ">
                         <header className="flex items-center px-5 py-3.5 gap-3.5 border-b-[1px] border-b-slate-600 ">
                             <div className={`rounded-full w-9 h-9 `}>
-                                <img
-                                    src={avatar ? avatar : defaultPic}
-                                    alt={`avatar of ${author}`}
-                                    className={`rounded-full`}
+                                <Avatar
+                                    pic={avatar ? avatar : defaultPic}
+                                    username={author}
+                                    userId={authorId}
+                                    position="bottom"
+                                    color={"dark"}
                                 />
                             </div>
 
@@ -105,12 +131,22 @@ function PostModal({
                         </header>
                         <main className="flex-grow container flex flex-col px-5 py-4 gap-7">
                             <Comment
+                                authorId={authorId}
                                 author={author}
                                 comment={caption}
                                 avatar={avatar}
                                 createdAt={createdAt}
-                                caption={true}
                             />
+                            {notiComment ? (
+                                <Comment
+                                    authorId={notiComment.author._id}
+                                    author={notiComment.author.username}
+                                    comment={notiComment.comment}
+                                    avatar={notiComment.author.avatarUrl}
+                                    createdAt={notiComment.createdAt}
+                                    type={"noti"}
+                                />
+                            ) : null}
                             {commentArr.map((comment, index) => (
                                 <Comment
                                     key={index}
@@ -120,7 +156,11 @@ function PostModal({
                                     createdAt={comment.createdAt}
                                 />
                             ))}
-                            <CommentList postId={postId} user={user} />
+                            <CommentList
+                                postId={postId}
+                                user={user}
+                                except={notiCommentId}
+                            />
                         </main>
                         <section className="border-t-[1px] flex items-center border-t-slate-600 py-5 px-5 gap-4">
                             <div

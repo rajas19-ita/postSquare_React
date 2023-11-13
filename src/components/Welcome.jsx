@@ -1,11 +1,40 @@
 import React from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import waving from "../assets/waving.png";
-import defaultPic from "../assets/avatar-1.jpg";
+
 import Happy from "../assets/happy.png";
 import post from "../assets/post.png";
 import click from "../assets/click.gif";
+import Avatar from "./Avatar";
+import AuthContext from "../context/AuthContext";
 
-function Welcome({ user: { username }, existingUsers, setIsNew }) {
+function Welcome() {
+    const { setIsNew, user } = useContext(AuthContext);
+    const usersFetched = useRef(false);
+    const [existingUsers, setExistingUsers] = useState([]);
+
+    useEffect(() => {
+        if (usersFetched.current === true) return;
+        usersFetch();
+        usersFetched.current = true;
+    }, []);
+
+    const usersFetch = async () => {
+        const queryParams = new URLSearchParams();
+        queryParams.append("except", user._id);
+        queryParams.append("dataFields[]", "avatarUrl");
+        queryParams.append("dataFields[]", "username");
+
+        const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/users?${queryParams.toString()}`
+        );
+
+        const json = await response.json();
+        if (response.ok) {
+            setExistingUsers(json);
+        }
+    };
+
     return (
         <div className="flex flex-col items-center justify-center  h-full w-full">
             <div className="w-[34rem] flex flex-col">
@@ -32,15 +61,11 @@ function Welcome({ user: { username }, existingUsers, setIsNew }) {
                     </p>
                     <div className="flex gap-2 mb-8">
                         {existingUsers.map((user1) => (
-                            <img
-                                src={
-                                    user1.avatarUrl
-                                        ? user1.avatarUrl
-                                        : defaultPic
-                                }
-                                alt={`avatar of ${user1.username}`}
-                                className={`rounded-full w-8 h-8 `}
-                                name={user1.username}
+                            <Avatar
+                                pic={user1.avatarUrl}
+                                username={user1.username}
+                                userId={user1._id}
+                                position="top"
                                 key={user1._id}
                             />
                         ))}
@@ -58,7 +83,7 @@ function Welcome({ user: { username }, existingUsers, setIsNew }) {
                         </p>
                     </div>
 
-                    <p className="text-2xl font-semibold leading-[2.1rem] flex gap-2">
+                    <p className="text-2xl font-semibold leading-[2rem] flex gap-2">
                         & enjoy your journey on
                         <span className="flex gap-1">
                             postSquare !

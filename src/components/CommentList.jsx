@@ -4,7 +4,7 @@ import { GrAddCircle } from "react-icons/gr";
 
 import { FadeLoader } from "react-spinners";
 
-function CommentList({ postId, user }) {
+function CommentList({ postId, user, except = null }) {
     const [commentArr, setCommentArr] = useState([]);
     const [isEnd, setIsEnd] = useState(false);
     const [timeStamp, setTimeStamp] = useState(Date.now());
@@ -20,10 +20,13 @@ function CommentList({ postId, user }) {
     const fetchComments = async () => {
         if (!isEnd) {
             setCommentLoading(true);
+
             const response = await fetch(
                 `${
                     import.meta.env.VITE_API_URL
-                }/posts/${postId}/comments?timeStamp=${timeStamp}`,
+                }/posts/${postId}/comments?timeStamp=${timeStamp}${
+                    except ? `&except=${except}` : ""
+                }`,
                 {
                     method: "GET",
                     headers: {
@@ -53,6 +56,7 @@ function CommentList({ postId, user }) {
             {commentArr.map((cmnt) => (
                 <Comment
                     key={cmnt._id}
+                    authorId={cmnt.author._id}
                     author={cmnt.author.username}
                     comment={cmnt.comment}
                     avatar={cmnt.author.avatarUrl}

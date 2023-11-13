@@ -1,19 +1,22 @@
 import React from "react";
-import msg from "../assets/msg.gif";
+
 import { useState, useContext, useRef, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import Notification from "./Notification";
 import { FadeLoader } from "react-spinners";
 import { GrAddCircle } from "react-icons/gr";
+import useClickOutside from "../hooks/useClickOutside";
 
-function NotificationDrawer() {
+function NotificationDrawer({ closeDrawer, notiBtnRef }) {
     const [loading, setLoading] = useState(false);
     const { user } = useContext(AuthContext);
     const [timeStamp, setTimeStamp] = useState(Date.now());
     const [isEnd, setIsEnd] = useState(false);
     const [notificationArr, setNotificationArr] = useState([]);
     const notisFetched = useRef(false);
+    const notiDrawerRef = useRef(null);
 
+    useClickOutside(closeDrawer, notiDrawerRef, notiBtnRef);
     useEffect(() => {
         if (notisFetched.current) return;
         fetchNotifications();
@@ -58,16 +61,16 @@ function NotificationDrawer() {
              border-l-[#3d4957] border-r-[#293a4b]
             overflow-y-scroll
               `}
+            ref={notiDrawerRef}
         >
-            <div className="flex flex-col gap-6 ">
+            <div className="flex flex-col ">
                 <div
                     className="text-2xl font-semibold tracking-wide flex items-center 
-                 pt-7 pl-7 pb-4 bg-sidebar  "
+                 pt-7 pl-7 pb-4 bg-sidebar border-b-[1px] border-b-[#3d4957]"
                 >
                     <h2>Notifications</h2>
-                    {/* <img src={msg} className="h-12 w-16" /> */}
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col ">
                     {notificationArr.map((notification) => (
                         <Notification
                             userId={notification.from._id}
@@ -78,6 +81,7 @@ function NotificationDrawer() {
                             commentId={notification.commentId}
                             type={notification.type}
                             createdAt={notification.createdAt}
+                            closeDrawer={closeDrawer}
                         />
                     ))}
                     {loading ? (
@@ -92,7 +96,7 @@ function NotificationDrawer() {
                             />
                         </div>
                     ) : (
-                        <div className="self-center">
+                        <div className="self-center pt-4">
                             <button
                                 className="active:scale-95 transition-all ease-out enabled:active:text-white 
                          disabled:opacity-20 opacity-100"
