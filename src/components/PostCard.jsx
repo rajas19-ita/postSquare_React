@@ -52,6 +52,7 @@ function PostCard({
 
     const handleLike = async (e) => {
         if (!liked) {
+            setLiked(true);
             const response = await fetch(
                 `${import.meta.env.VITE_API_URL}/posts/${_id}/likes`,
                 {
@@ -65,7 +66,6 @@ function PostCard({
             const json = await response.json();
 
             if (response.ok) {
-                setLiked(true);
                 setTotalLikes((totalLikes) => totalLikes + 1);
             }
         } else {
