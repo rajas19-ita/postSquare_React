@@ -85,13 +85,10 @@ function NotificationDrawer({ closeDrawer, notiBtnRef }) {
                         />
                     ))}
                     {loading ? (
-                        <div className="self-center">
+                        <div className="self-center ">
                             <FadeLoader
                                 color="#8f8f8f"
-                                height={7}
-                                margin={-9}
-                                radius={8}
-                                width={3}
+                                width={4}
                                 speedMultiplier={2}
                             />
                         </div>
