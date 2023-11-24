@@ -35,7 +35,7 @@ const authReducer = (state, action) => {
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, { user: null });
-    const [isLoading, setIsLoading] = useState(true);
+
     const [isNew, setIsNew] = useState(false);
 
     useEffect(() => {
@@ -47,27 +47,19 @@ export const AuthProvider = ({ children }) => {
                 if (decodedJWT.exp * 1000 < Date.now()) {
                     localStorage.removeItem("user");
                     dispatch({ type: "LOGOUT" });
-                    setIsLoading(false);
                     return;
                 }
 
                 dispatch({ type: "LOGIN", payload: user });
-                setIsLoading(false);
-            } else {
-                dispatch({ type: "LOGOUT" });
-                setIsLoading(false);
             }
         } catch (err) {
             localStorage.removeItem("user");
             dispatch({ type: "LOGOUT" });
-            setIsLoading(false);
         }
     }, []);
 
     return (
-        <AuthContext.Provider
-            value={{ ...state, isLoading, dispatch, isNew, setIsNew }}
-        >
+        <AuthContext.Provider value={{ ...state, dispatch, isNew, setIsNew }}>
             {children}
         </AuthContext.Provider>
     );

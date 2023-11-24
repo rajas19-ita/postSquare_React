@@ -76,8 +76,8 @@ function EditProfile() {
     };
 
     return (
-        <div className="h-full pb-16 md:pb-0 md:pl-20 pt-8 text-[#e6e6e6]">
-            <div className="flex justify-center border-b-[1px] border-b-slate-600 pb-7 mx-10">
+        <div className="">
+            <div className="flex justify-center border-b-[1px] border-b-slate-600 py-7 mx-10">
                 <div className="h-32 w-32 rounded-full md:mr-8 relative border-[1px] border-slate-600 ">
                     {isProcessing ? (
                         <FadeLoader

@@ -36,7 +36,7 @@ function Welcome() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center  h-full w-full">
+        <div className="flex flex-col items-center justify-center h-full w-full">
             <div className="w-[34rem] flex flex-col">
                 <div className="flex gap-3">
                     <img

@@ -7,40 +7,32 @@ import SignUpForm from "./components/SignUpForm";
 import EditProfile from "./pages/EditProfile";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
-import Sidebar from "./components/Sidebar";
-import AccessDeniedPage from "./pages/AccessDeniedPage";
-import PageNotFound from "./pages/PageNotFound";
 import Loading from "./pages/Loading";
 import PostRedirect from "./pages/PostRedirect";
+import AppLayout from "./layout/AppLayout";
+import EntryLayout from "./layout/EntryLayout";
+import PostFeed from "./components/PostFeed";
+import Welcome from "./components/Welcome";
 
 function App() {
-    const { user, isLoading } = useContext(AuthContext);
+    const { isNew } = useContext(AuthContext);
 
-    if (isLoading) {
-        return <Loading />;
-    }
     return (
         <>
-            <div className="w-full h-screen mx-auto bg-main lg:max-w-screen-lg text-[#e6e6e6] ">
-                <Sidebar />
-
-                <Routes>
-                    <Route path="/" element={user ? <Home /> : <LoginForm />} />
+            <Routes>
+                <Route element={<EntryLayout />}>
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/signup" element={<SignUpForm />} />
+                </Route>
+                <Route element={<AppLayout />}>
                     <Route
-                        path="/signup"
-                        element={user ? <Navigate to="/" /> : <SignUpForm />}
+                        path="/"
+                        element={isNew ? <Welcome /> : <PostFeed />}
                     />
-                    <Route
-                        path="/editProfile"
-                        element={user ? <EditProfile /> : <AccessDeniedPage />}
-                    />
-                    <Route
-                        path="/posts/:id"
-                        element={user ? <PostRedirect /> : <AccessDeniedPage />}
-                    />
-                    <Route path="*" element={<PageNotFound />} />
-                </Routes>
-            </div>
+                    <Route path="/editprofile" element={<EditProfile />} />
+                    <Route path="/posts/:id" element={<PostRedirect />} />
+                </Route>
+            </Routes>
             <ToastContainer />
         </>
     );

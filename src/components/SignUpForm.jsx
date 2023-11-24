@@ -20,7 +20,7 @@ function SignUpForm() {
     };
 
     return (
-        <div className="flex flex-col h-full pb-16 md:pb-0 md:pl-20 w-full items-center justify-center">
+        <div className="flex  h-full  w-full items-center justify-center">
             <div
                 className=" h-[30rem] w-[19rem] bg-[#34495e] 
                 text-[#e6e6e6] rounded-md  p-5 text-[0.875rem]"
