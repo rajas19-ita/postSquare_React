@@ -7,7 +7,7 @@ import { useState, useContext } from "react";
 import getTimePassed from "../utils/getTimePassed";
 import AuthContext from "../context/AuthContext";
 import defaultPic from "../assets/avatar-1.jpg";
-import { FadeLoader } from "react-spinners";
+import Loading from "./Loading";
 import { useRef } from "react";
 import { BsEmojiSmile } from "react-icons/bs";
 import EmojiPicker from "./EmojiPicker";
@@ -222,22 +222,7 @@ function PostCard({
             <section className={`flex items-center pt-2 pb-4 `}>
                 {isPosting ? (
                     <div className="flex-grow ">
-                        <FadeLoader
-                            color="#8f8f8f"
-                            speedMultiplier={2}
-                            height={7}
-                            margin={-9}
-                            radius={8}
-                            width={3}
-                            cssOverride={{
-                                display: "block",
-                                margin: "auto",
-                                top: "0",
-                                left: "0",
-                                width: "0",
-                                height: "0",
-                            }}
-                        />
+                        <Loading size={"small"} />
                     </div>
                 ) : (
                     <>

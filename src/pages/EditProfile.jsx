@@ -2,10 +2,11 @@ import React, { useContext, useEffect } from "react";
 import defaultPic from "../assets/avatar-1.jpg";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useState } from "react";
-import { FadeLoader } from "react-spinners";
+
 import SetAvatarModal from "../components/SetAvatarModal";
 import AuthContext from "../context/AuthContext";
 import { toast } from "react-toastify";
+import Loading from "../components/Loading";
 
 function EditProfile() {
     const { user, dispatch } = useContext(AuthContext);
@@ -78,13 +79,11 @@ function EditProfile() {
     return (
         <div className="">
             <div className="flex justify-center border-b-[1px] border-b-slate-600 py-7 mx-10">
-                <div className="h-32 w-32 rounded-full md:mr-8 relative border-[1px] border-slate-600 ">
+                <div className="h-32 w-32 rounded-full md:mr-8 relative border-[1px] border-slate-600 flex justify-center">
                     {isProcessing ? (
-                        <FadeLoader
-                            color="#8f8f8f"
-                            speedMultiplier={2}
-                            className="ml-10 mt-8"
-                        />
+                        <div className="self-center ">
+                            <Loading />
+                        </div>
                     ) : null}
                     <img
                         src={avatar}

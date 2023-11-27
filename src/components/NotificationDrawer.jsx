@@ -3,9 +3,10 @@ import React from "react";
 import { useState, useContext, useRef, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import Notification from "./Notification";
-import { FadeLoader } from "react-spinners";
+
 import { GrAddCircle } from "react-icons/gr";
 import useClickOutside from "../hooks/useClickOutside";
+import Loading from "./Loading";
 
 function NotificationDrawer({ closeDrawer, notiBtnRef }) {
     const [loading, setLoading] = useState(false);
@@ -85,12 +86,8 @@ function NotificationDrawer({ closeDrawer, notiBtnRef }) {
                         />
                     ))}
                     {loading ? (
-                        <div className="self-center ">
-                            <FadeLoader
-                                color="#8f8f8f"
-                                width={4}
-                                speedMultiplier={2}
-                            />
+                        <div className="self-center pt-4">
+                            <Loading size={"small"} />
                         </div>
                     ) : (
                         <div className="self-center pt-4">

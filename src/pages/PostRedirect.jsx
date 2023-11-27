@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import { FadeLoader } from "react-spinners";
+import Loading from "../components/Loading";
 import PostCard from "../components/PostCard";
 
 function PostRedirect() {
@@ -32,7 +32,7 @@ function PostRedirect() {
     return (
         <div className="flex flex-col py-4 items-center h-full overflow-y-auto">
             {loading ? (
-                <FadeLoader color="#8f8f8f" speedMultiplier={2} />
+                <Loading />
             ) : (
                 <PostCard
                     post={post}

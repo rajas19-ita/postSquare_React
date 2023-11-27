@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useSignUp from "../hooks/useSignUp";
-import { FadeLoader } from "react-spinners";
+import Loading from "./Loading";
 
 function SignUpForm() {
     const [username, setUsername] = useState("");
@@ -84,27 +84,11 @@ function SignUpForm() {
                         className="rounded-md bg-sidebar self-stretch py-3 uppercase 
                             font-medium active:scale-95  h-11 
                              hover:bg-[#1f2a36] active:bg-[#1f2a36] 
-                            active:text-[#b8b8b8]  transition-all ease-out tracking-wide"
+                            active:text-[#b8b8b8]  transition-all ease-out tracking-wide flex items-center justify-center"
                         type="submit"
                         disabled={isLoading}
                     >
-                        {isLoading ? (
-                            <FadeLoader
-                                color="#8f8f8f"
-                                height={7}
-                                margin={-9}
-                                radius={8}
-                                width={3}
-                                speedMultiplier={2}
-                                cssOverride={{
-                                    margin: "auto",
-                                    top: "1rem",
-                                    left: "1rem",
-                                }}
-                            />
-                        ) : (
-                            "Sign Up"
-                        )}
+                        {isLoading ? <Loading size={"small"} /> : "Sign Up"}
                     </button>
                 </form>
                 {error ? (

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FadeLoader } from "react-spinners";
+import Loading from "./Loading";
 
 function UserCard({ pic, username, position, userId, color }) {
     const [user, setUser] = useState();
@@ -70,14 +70,7 @@ function UserCard({ pic, username, position, userId, color }) {
 
                 {loading ? (
                     <div className="self-center">
-                        <FadeLoader
-                            color="#8f8f8f"
-                            height={7}
-                            margin={-9}
-                            radius={8}
-                            width={3}
-                            speedMultiplier={2}
-                        />
+                        <Loading size={"small"} />
                     </div>
                 ) : (
                     <p className="text-sm leading-[1.4rem]">{user.bio}</p>

@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
-import { FadeLoader } from "react-spinners";
+
+import Loading from "./Loading";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -64,27 +65,11 @@ function LoginForm() {
                     <button
                         className="rounded-md bg-sidebar h-11 self-stretch py-3 uppercase font-medium 
                             active:scale-95 hover:bg-[#1f2a36] active:bg-[#1f2a36] 
-                            active:text-[#b8b8b8]  transition-all ease-out tracking-wide"
+                            active:text-[#b8b8b8]  transition-all ease-out tracking-wide flex items-center justify-center"
                         type="submit"
                         disabled={isLoading}
                     >
-                        {isLoading ? (
-                            <FadeLoader
-                                color="#8f8f8f"
-                                height={7}
-                                margin={-9}
-                                radius={8}
-                                width={3}
-                                speedMultiplier={2}
-                                cssOverride={{
-                                    margin: "auto",
-                                    top: "1rem",
-                                    left: "1rem",
-                                }}
-                            />
-                        ) : (
-                            "Login"
-                        )}
+                        {isLoading ? <Loading size={"small"} /> : "Login"}
                     </button>
                 </form>
                 {error ? (

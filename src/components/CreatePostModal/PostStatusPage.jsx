@@ -1,7 +1,8 @@
 import React from "react";
-import { FadeLoader } from "react-spinners";
+
 import errorGif from "../../assets/error.gif";
 import successGif from "../../assets/success.gif";
+import Loading from "../Loading";
 
 function PostStatusPage({ isPosting, postError }) {
     return (
@@ -18,11 +19,7 @@ function PostStatusPage({ isPosting, postError }) {
             </h2>
             <div className="flex flex-col items-center flex-grow border-t-[1px] justify-center border-t-slate-600">
                 {isPosting ? (
-                    <FadeLoader
-                        size={150}
-                        color="#8f8f8f"
-                        speedMultiplier={2}
-                    />
+                    <Loading />
                 ) : postError ? (
                     <div className="flex flex-col items-center">
                         <img

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import useFetchPost from "../hooks/useFetchPost";
 import PostCard from "./PostCard";
-import { FadeLoader } from "react-spinners";
+
+import Loading from "./Loading";
 
 function PostFeed() {
     const postsFetched = useRef(false);
@@ -39,15 +40,7 @@ function PostFeed() {
                 <PostCard key={post._id} post={post} />
             ))}
 
-            {postLoading ? (
-                <div className="w-full">
-                    <FadeLoader
-                        color="#8f8f8f"
-                        className="mx-auto mb-5 "
-                        speedMultiplier={2}
-                    />
-                </div>
-            ) : null}
+            {postLoading ? <Loading /> : null}
         </div>
     );
 }

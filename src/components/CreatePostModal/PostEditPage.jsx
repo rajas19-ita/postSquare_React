@@ -1,7 +1,7 @@
 import React from "react";
 import { HiArrowLeft } from "react-icons/hi";
 import CaptionInput from "./CaptionInput";
-import { FadeLoader } from "react-spinners";
+import Loading from "../Loading";
 
 function PostEditPage({
     aspect,
@@ -47,7 +47,7 @@ function PostEditPage({
           border-r-[1px] border-r-slate-600`}
                 >
                     {loading ? (
-                        <FadeLoader color="#8f8f8f" speedMultiplier={2} />
+                        <Loading />
                     ) : (
                         <img
                             src={croppedImg}

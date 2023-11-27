@@ -2,7 +2,7 @@ import Comment from "./Comment";
 import { useState, useRef, useEffect } from "react";
 import { GrAddCircle } from "react-icons/gr";
 
-import { FadeLoader } from "react-spinners";
+import Loading from "./Loading";
 
 function CommentList({ postId, user, except = null }) {
     const [commentArr, setCommentArr] = useState([]);
@@ -66,14 +66,7 @@ function CommentList({ postId, user, except = null }) {
 
             {commentLoading ? (
                 <div className="self-center">
-                    <FadeLoader
-                        color="#8f8f8f"
-                        height={7}
-                        margin={-9}
-                        radius={8}
-                        width={3}
-                        speedMultiplier={2}
-                    />
+                    <Loading size={"small"} />
                 </div>
             ) : (
                 <div className="self-center">
