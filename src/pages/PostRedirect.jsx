@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { FadeLoader } from "react-spinners";
@@ -31,7 +31,7 @@ function PostRedirect() {
     };
 
     return (
-        <div className="h-full pb-16 md:pb-0 md:pl-20 py-4 text-[#e6e6e6] w-full flex flex-col items-center overflow-y-auto">
+        <div className="flex pt-4 justify-center h-full overflow-y-auto">
             {loading ? (
                 <FadeLoader color="#8f8f8f" speedMultiplier={2} />
             ) : (

@@ -1,5 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/Home";
+import { Routes, Route } from "react-router-dom";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "./components/LoginForm";
@@ -7,7 +7,7 @@ import SignUpForm from "./components/SignUpForm";
 import EditProfile from "./pages/EditProfile";
 import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
-import Loading from "./pages/Loading";
+
 import PostRedirect from "./pages/PostRedirect";
 import AppLayout from "./layout/AppLayout";
 import EntryLayout from "./layout/EntryLayout";

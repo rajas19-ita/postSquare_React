@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { Navigate } from "react-router-dom";
@@ -6,10 +6,6 @@ import useAuth from "../hooks/useAuth";
 
 function AppLayout() {
     const { user } = useAuth();
-
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
 
     return (
         <div className="w-full h-screen mx-auto bg-main lg:max-w-screen-lg text-[#e6e6e6] ">

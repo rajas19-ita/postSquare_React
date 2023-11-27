@@ -35,12 +35,12 @@ const authReducer = (state, action) => {
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, { user: null });
-
     const [isNew, setIsNew] = useState(false);
 
     useEffect(() => {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
+
             if (user) {
                 const decodedJWT = JSON.parse(atob(user.token.split(".")[1]));
 
