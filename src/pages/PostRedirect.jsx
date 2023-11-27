@@ -10,7 +10,6 @@ function PostRedirect() {
     const cmntId = new URLSearchParams(location.search).get("cmntId");
     const { user } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
-
     const [post, setPost] = useState(null);
 
     useEffect(() => {
@@ -31,7 +30,7 @@ function PostRedirect() {
     };
 
     return (
-        <div className="flex pt-4 justify-center h-full overflow-y-auto">
+        <div className="flex flex-col py-4 items-center h-full overflow-y-auto">
             {loading ? (
                 <FadeLoader color="#8f8f8f" speedMultiplier={2} />
             ) : (
