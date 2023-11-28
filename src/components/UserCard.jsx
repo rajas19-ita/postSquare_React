@@ -69,9 +69,7 @@ function UserCard({ pic, username, position, userId, color }) {
                 </div>
 
                 {loading ? (
-                    <div className="self-center">
-                        <Loading size={"small"} />
-                    </div>
+                    <Loading type={"line"} count={2} />
                 ) : (
                     <p className="text-sm leading-[1.4rem]">{user.bio}</p>
                 )}
