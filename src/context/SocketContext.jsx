@@ -22,15 +22,9 @@ export const SocketProvider = ({ children }) => {
     useEffect(() => {
         if (!socket) return;
 
-        function onConnect() {
-            console.log("connected");
-        }
-        function onMsg() {
-            console.log("message recieved");
-        }
-        function onNotification(params) {
-            console.log(params);
-        }
+        function onConnect() {}
+        function onMsg() {}
+        function onNotification(params) {}
 
         socket.connect();
         socket.on("connect", onConnect);
