@@ -55,7 +55,7 @@ function PostCard({
             setLiked(true);
             setTotalLikes((totalLikes) => totalLikes + 1);
             const response = await fetch(
-                `${import.meta.env.VITE_API_URL}/posts/${_id}/likes`,
+                `${process.env.VITE_API_URL}/api/posts/${_id}/likes`,
                 {
                     method: "POST",
                     headers: {
@@ -67,7 +67,7 @@ function PostCard({
             const json = await response.json();
         } else {
             const response = await fetch(
-                `${import.meta.env.VITE_API_URL}/posts/${_id}/likes`,
+                `${process.env.VITE_API_URL}/api/posts/${_id}/likes`,
                 {
                     method: "DELETE",
                     headers: {
@@ -104,7 +104,7 @@ function PostCard({
         };
         setIsPosting(true);
         const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/posts/${_id}/comments`,
+            `${process.env.VITE_API_URL}/api/posts/${_id}/comments`,
             {
                 method: "POST",
                 headers: {

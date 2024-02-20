@@ -48,9 +48,7 @@ function PostModal({
 
     const fetchComment = async () => {
         const response = await fetch(
-            `${
-                import.meta.env.VITE_API_URL
-            }/posts/${postId}/comments/${notiCommentId}`,
+            `${process.env.VITE_API_URL}/api/posts/${postId}/comments/${notiCommentId}`,
             {
                 headers: { authorization: `Bearer ${user.token}` },
             }

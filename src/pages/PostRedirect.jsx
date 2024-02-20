@@ -18,7 +18,7 @@ function PostRedirect() {
 
     const fetchPost = async () => {
         const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/posts/${id}`,
+            `${process.env.VITE_API_URL}/api/posts/${id}`,
             { headers: { authorization: `Bearer ${user.token}` } }
         );
         const json = await response.json();

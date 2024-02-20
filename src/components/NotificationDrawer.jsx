@@ -27,9 +27,7 @@ function NotificationDrawer({ closeDrawer, notiBtnRef }) {
     const fetchNotifications = async () => {
         setLoading(true);
         const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/users/${
-                user._id
-            }/notifications?timeStamp=${timeStamp}`,
+            `${process.env.VITE_API_URL}/api/users/${user._id}/notifications?timeStamp=${timeStamp}`,
             {
                 method: "GET",
                 headers: {

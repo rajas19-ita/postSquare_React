@@ -26,7 +26,7 @@ function Welcome() {
         queryParams.append("dataFields[]", "username");
 
         const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/users?${queryParams.toString()}`
+            `${process.env.VITE_API_URL}/api/users?${queryParams.toString()}`
         );
 
         const json = await response.json();

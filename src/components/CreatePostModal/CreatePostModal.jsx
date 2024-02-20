@@ -38,7 +38,7 @@ function CreatePostModal({ handleClose }) {
         data.set("postImage", file);
         data.set("aspect", aspect);
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+        const response = await fetch(`${process.env.VITE_API_URL}/api/posts`, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${user.token}`,

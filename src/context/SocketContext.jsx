@@ -11,7 +11,7 @@ export const SocketProvider = ({ children }) => {
     useEffect(() => {
         if (user) {
             setSocket(
-                io(import.meta.env.VITE_API_URL, {
+                io(process.env.VITE_API_URL, {
                     autoConnect: false,
                     query: { token: user.token },
                 })

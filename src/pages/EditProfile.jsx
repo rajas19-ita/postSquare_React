@@ -48,7 +48,7 @@ function EditProfile() {
 
     const handleSubmit = async () => {
         const response = await fetch(
-            `${import.meta.env.VITE_API_URL}/users/me/bio`,
+            `${process.env.VITE_API_URL}/api/users/me/bio`,
             {
                 method: "PATCH",
                 headers: {

@@ -23,8 +23,8 @@ function CommentList({ postId, user, except = null }) {
 
             const response = await fetch(
                 `${
-                    import.meta.env.VITE_API_URL
-                }/posts/${postId}/comments?timeStamp=${timeStamp}${
+                    process.env.VITE_API_URL
+                }/api/posts/${postId}/comments?timeStamp=${timeStamp}${
                     except ? `&except=${except}` : ""
                 }`,
                 {

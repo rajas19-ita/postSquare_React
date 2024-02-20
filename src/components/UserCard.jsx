@@ -19,8 +19,8 @@ function UserCard({ pic, username, position, userId, color }) {
 
         const response = await fetch(
             `${
-                import.meta.env.VITE_API_URL
-            }/users/${userId}?${queryParams.toString()}`
+                process.env.VITE_API_URL
+            }/api/users/${userId}?${queryParams.toString()}`
         );
 
         const json = await response.json();
