@@ -31,7 +31,7 @@ function NotificationDrawer({ closeDrawer, notiBtnRef }) {
                 user._id
             }/notifications?timeStamp=${timeStamp}`,
             {
-                method: "Get",
+                method: "GET",
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },

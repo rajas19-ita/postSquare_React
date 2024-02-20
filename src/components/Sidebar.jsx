@@ -13,7 +13,7 @@ import NotificationDrawer from "./NotificationDrawer";
 import MessageDrawer from "./MessageDrawer";
 
 function Sidebar() {
-    const [isOpen, setIsOpen] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [notiOpen, setNotiOpen] = useState(false);
     const [msgOpen, setMsgOpen] = useState(false);
     const [expMenu, setExpMenu] = useState(false);
@@ -45,7 +45,7 @@ function Sidebar() {
                             }}
                         >
                             {location.pathname === "/" &&
-                            !isOpen &&
+                            !modalIsOpen &&
                             !notiOpen &&
                             !msgOpen ? (
                                 <GoHomeFill size={27} />
@@ -67,7 +67,7 @@ function Sidebar() {
                             }}
                         >
                             {location.pathname === "/editProfile" &&
-                            !isOpen &&
+                            !modalIsOpen &&
                             !notiOpen &&
                             !msgOpen ? (
                                 <GoPersonFill size={27} />
@@ -80,11 +80,11 @@ function Sidebar() {
                         <button
                             className={`active:scale-90 active:text-[#b8b8b8] block transition-all ease-out
               p-[0.5rem] rounded-[0.3rem] hover:bg-[#2f4255] `}
-                            onClick={() => setIsOpen(true)}
+                            onClick={() => setModalIsOpen(true)}
                             disabled={user ? false : true}
                             aria-label="Create Post"
                         >
-                            {isOpen ? (
+                            {modalIsOpen ? (
                                 <BsPlusSquareFill size={27} />
                             ) : (
                                 <BsPlusSquare size={27} />
@@ -103,7 +103,7 @@ function Sidebar() {
                             aria-label="View Notifications"
                             ref={notiBtnRef}
                         >
-                            {notiOpen && !isOpen ? (
+                            {notiOpen && !modalIsOpen ? (
                                 <AiFillHeart size={27} />
                             ) : (
                                 <AiOutlineHeart size={27} />
@@ -121,7 +121,7 @@ function Sidebar() {
                                 setMsgOpen(!msgOpen);
                             }}
                         >
-                            {msgOpen && !isOpen && !notiOpen ? (
+                            {msgOpen && !modalIsOpen ? (
                                 <RiMessengerFill size={27} />
                             ) : (
                                 <RiMessengerLine size={27} />
@@ -149,8 +149,8 @@ function Sidebar() {
                     ) : null}
                 </div>
             </nav>
-            {isOpen ? (
-                <CreatePostModal handleClose={() => setIsOpen(false)} />
+            {modalIsOpen ? (
+                <CreatePostModal handleClose={() => setModalIsOpen(false)} />
             ) : null}
             {notiOpen ? (
                 <NotificationDrawer

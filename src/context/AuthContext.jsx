@@ -46,7 +46,6 @@ export const AuthProvider = ({ children }) => {
 
                 if (decodedJWT.exp * 1000 < Date.now()) {
                     localStorage.removeItem("user");
-                    dispatch({ type: "LOGOUT" });
                     return;
                 }
 
